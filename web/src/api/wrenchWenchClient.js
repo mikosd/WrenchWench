@@ -71,15 +71,15 @@ export default class WrenchWenchClient extends BindingClass {
         return await this.authenticator.getUserToken();
     }
     /**
-     * Gets the playlist for the given ID.
-     * @param id Unique identifier for a playlist
+     * Gets the vehicle for the given vin.
+     * @param vin a unique identifier for a vehicle
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The playlist's metadata.
      */
     async getVehicle(vin, errorCallback) {
         try {
             const response = await this.axiosClient.get(`vehicle/${vin}`);
-            return response.data.playlist;
+            return response.data.vehicle;
         } catch (error) {
             this.handleError(error, errorCallback)
         }

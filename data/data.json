@@ -1,0 +1,253 @@
+{
+  "vehicles": [
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "1D4HR48N73F526307" },
+          "make": { "S": "Dodge" },
+          "model": { "S": "Durango" },
+          "year": { "S": "2003" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "1GBJK34G32E254979" },
+          "make": { "S": "Chevrolet" },
+          "model": { "S": "Silverado" },
+          "year": { "S": "2002" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "1LNHM87A31Y667552" },
+          "make": { "S": "Lincoln" },
+          "model": { "S": "LS" },
+          "year": { "S": "2001" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "JH4DA1750HS018437" },
+          "make": { "S": "Acura" },
+          "model": { "S": "Integra" },
+          "year": { "S": "1987" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "2D4FV48V05H529506" },
+          "make": { "S": "Dodge" },
+          "model": { "S": "Magnum" },
+          "year": { "S": "2005" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "SCA664S5XAUX48670" },
+          "make": { "S": "Rolls Royce" },
+          "model": { "S": "Ghost" },
+          "year": { "S": "2010" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "JHLRE48518C002529" },
+          "make": { "S": "Honda" },
+          "model": { "S": "CR-V" },
+          "year": { "S": "2008" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "WP0AA29966S716557" },
+          "make": { "S": "Porsche" },
+          "model": { "S": "911" },
+          "year": { "S": "2006" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "3VWDZ7AJ7BM373945" },
+          "make": { "S": "Volkswagen" },
+          "model": { "S": "Jetta" },
+          "year": { "S": "2011" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "TRUSC28N341016582" },
+          "make": { "S": "Audi" },
+          "model": { "S": "TT" },
+          "year": { "S": "2004" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "2G1AN35J4C1202219" },
+          "make": { "S": "Chevrolet" },
+          "model": { "S": "Caprice" },
+          "year": { "S": "1982" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "JM1BG2241R0797923" },
+          "make": { "S": "Mazda" },
+          "model": { "S": "Protege" },
+          "year": { "S": "1994" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "1MEBM62F2JH693379" },
+          "make": { "S": "Mercury" },
+          "model": { "S": "Cougar" },
+          "year": { "S": "1988" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "4S3BJ6332P6953766" },
+          "make": { "S": "Subaru" },
+          "model": { "S": "Legacy" },
+          "year": { "S": "1993" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "1FTHF25H1JNB79097" },
+          "make": { "S": "Ford" },
+          "model": { "S": "F-250" },
+          "year": { "S": "1988" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "2C3CA5CG8BH558973" },
+          "make": { "S": "Chrysler" },
+          "model": { "S": "300" },
+          "year": { "S": "2011" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "3N1BC13E99L480541" },
+          "make": { "S": "Nissan" },
+          "model": { "S": "Versa" },
+          "year": { "S": "2009" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "3FAFP13P41R199033" },
+          "make": { "S": "Ford" },
+          "model": { "S": "Escort" },
+          "year": { "S": "2001" }
+        }
+      }
+    },{
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "1G8ZF5287XZ363384" },
+          "make": { "S": "Saturn" },
+          "model": { "S": "S Series" },
+          "year": { "S": "1999" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "2G1WF52K959355243" },
+          "make": { "S": "Chevrolet" },
+          "model": { "S": "Impala" },
+          "year": { "S": "2005" }
+        }
+      }
+    }
+  ],
+  "records": [
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "2G1WF52K959355243" },
+          "recordId": {"S": "9355243-23-6-4"},
+          "timestamp": { "S": "23-6-4" },
+          "description": { "S": "OilChange" },
+          "priorityLevel": { "S": "HIGH" },
+          "status": { "S": "Complete" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "1G8ZF5287XZ363384" },
+          "recordId": {"S": "Z363384-22-3-14"},
+          "timestamp": { "S": "22-3-14" },
+          "description": { "S": "Rotate Tires" },
+          "priorityLevel": { "S": "LOW" },
+          "status": { "S": "Incomplete" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "3FAFP13P41R199033" },
+          "recordId": {"S": "R199033-19-10-31"},
+          "timestamp": { "S": "19-10-31" },
+          "description": { "S": "Flush all fluids" },
+          "priorityLevel": { "S": "LOW" },
+          "status": { "S": "Complete" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "vin": { "S": "1FTHF25H1JNB79097" },
+          "recordId": {"S": "NB79097-23-2-23"},
+          "timestamp": { "S": "23-2-23" },
+          "description": { "S": "Change spark plugs" },
+          "priorityLevel": { "S": "MEDIUM" },
+          "status": { "S": "Complete" }
+        }
+      }
+    }
+  ]
+}

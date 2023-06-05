@@ -1,5 +1,7 @@
 package com.nashss.se.WrenchWench.activity.requests;
 
+import com.nashss.se.WrenchWench.models.VehicleModel;
+
 public class GetVehicleRequest {
     private final String vin;
 
@@ -18,6 +20,10 @@ public class GetVehicleRequest {
                 '}';
     }
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
     public static class Builder{
         private String vin;
 
@@ -25,6 +31,8 @@ public class GetVehicleRequest {
             this.vin = vin;
             return this;
         }
+
+
 
         public GetVehicleRequest build() {
             return new GetVehicleRequest(vin);
