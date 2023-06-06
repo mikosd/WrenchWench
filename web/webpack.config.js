@@ -23,9 +23,10 @@ module.exports = {
     usedExports: true
   },
   entry: {
-    createPlaylist: path.resolve(__dirname, 'src', 'pages', 'createPlaylist.js'),
-    viewPlaylist: path.resolve(__dirname, 'src', 'pages', 'viewPlaylist.js'),
-    searchPlaylists: path.resolve(__dirname, 'src', 'pages', 'searchPlaylists.js'),
+    viewVehicle: path.resolve(__dirname, 'src', 'pages', 'viewVehicle.js'),
+    landingPage: path.resolve(__dirname, 'src', 'pages', 'landingPage.js'),
+    loadGarage: path.resolve(__dirname, 'src', 'pages', 'loadGarage.js'),
+    //ClientMixin: path.resolve(__dirname, 'src', 'util', 'ClientMixin.js'),
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),

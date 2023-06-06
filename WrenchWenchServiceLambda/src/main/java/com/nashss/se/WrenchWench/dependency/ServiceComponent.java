@@ -1,5 +1,7 @@
 package com.nashss.se.WrenchWench.dependency;
 
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.nashss.se.WrenchWench.activity.GetAllVehiclesActivity;
 import com.nashss.se.WrenchWench.activity.GetVehicleActivity;
 import dagger.Component;
 import javax.inject.Singleton;
@@ -17,4 +19,5 @@ public interface ServiceComponent {
      */
     GetVehicleActivity provideGetVehicleActivity();
 
+    GetAllVehiclesActivity provideGetAllVehiclesActivity();
 }

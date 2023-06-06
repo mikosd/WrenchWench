@@ -1,9 +1,9 @@
-package com.nashss.se.WrenchWench.converters;
+package com.nashss.se.WrenchWench.utils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class VinDecoder {
+public class VinDecoderUtil {
     private String vin;
 
     //World Manufacturer Identifier Digits 1-3 of the VIN
@@ -24,7 +24,7 @@ public class VinDecoder {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'R', 'S',
             'T', 'V', 'W', 'X', 'Y', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 
-    private VinDecoder(String vin){
+    private VinDecoderUtil(String vin){
         validateVin(vin);
         this.vin = vin;
         this.wmi = vin.substring(0,2);

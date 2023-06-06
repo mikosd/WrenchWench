@@ -1,12 +1,16 @@
 package com.nashss.se.WrenchWench.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.nashss.se.WrenchWench.metrics.MetricsPublisher;
 import com.nashss.se.WrenchWench.dynamodb.models.Vehicle;
 import com.nashss.se.WrenchWench.metrics.MetricsConstants;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.List;
 
+@Singleton
 public class VehicleDao {
     private final DynamoDBMapper dynamoDBMapper;
     private final MetricsPublisher metricsPublisher;
@@ -40,5 +44,11 @@ public class VehicleDao {
     public Vehicle saveVehicle(Vehicle vehicle){
         this.dynamoDBMapper.save(vehicle);
         return vehicle;
+    }
+
+    public List<Vehicle> getAllVehicles(){
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+
+        return dynamoDBMapper.scan(Vehicle.class, scanExpression);
     }
 }
