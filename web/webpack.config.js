@@ -24,7 +24,9 @@ module.exports = {
   },
   entry: {
     viewVehicle: path.resolve(__dirname, 'src', 'pages', 'viewVehicle.js'),
-    //viewPlaylist: path.resolve(__dirname, 'src', 'pages', 'viewPlaylist.js'),
+    landingPage: path.resolve(__dirname, 'src', 'pages', 'landingPage.js'),
+    loadGarage: path.resolve(__dirname, 'src', 'pages', 'loadGarage.js'),
+    //ClientMixin: path.resolve(__dirname, 'src', 'util', 'ClientMixin.js'),
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),
