@@ -5,7 +5,7 @@ export default class Authenticator extends BindingClass {
     constructor() {
         super();
 
-        const methodsToBind = ['getCurrentUserInfo'];
+        const methodsToBind = ['getCurrentUserInfo', 'isUserLoggedIn'];
         this.bindClassMethods(methodsToBind, this);
 
         this.configureCognito();
