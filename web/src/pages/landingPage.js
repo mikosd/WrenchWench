@@ -6,11 +6,20 @@ import DataStore from "../util/DataStore";
 class LandingPage extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['clientLoaded', 'mount', 'login'], this);
+        this.bindClassMethods(['clientLoaded', 'mount', 'login', 'isLoggedIn'], this);
         this.dataStore = new DataStore();
         this.header = new Header(this.dataStore);
         this.client = new WrenchWenchClient();
         this.clientLoaded();
+    }
+
+    async isLoggedIn(errorCallback){
+        const isLoggedIn = await this.authenticator.isUserLoggedIn();
+        if (!isLoggedIn){
+            return undefined;
+        }
+
+        return true;
     }
 
     async clientLoaded() {}
@@ -28,6 +37,8 @@ class LandingPage extends BindingClass {
     async login(){
             await this.client.login();
     }
+
+
 
 }
 /**
