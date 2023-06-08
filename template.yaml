@@ -262,8 +262,6 @@ Resources:
           Properties:
             Path: /vehicles
             Method: get
-            Auth:
-              Authorizer: 'NONE'
 
   CreateVehicleLambda:
     Type: AWS::Serverless::Function
@@ -282,9 +280,8 @@ Resources:
         WrenchWenchService:
           Type: Api
           Properties:
-            Path: /vehicles
+            Path: /vehicles/{vin}
             Method: post
-
 
 #  SearchPlaylistsLambda:
 #    Type: AWS::Serverless::Function

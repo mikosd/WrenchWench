@@ -88,32 +88,43 @@ export default class WrenchWenchClient extends BindingClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The vehicle's metadata.
      */
-//    async getVehicle(vin, errorCallback) {
-//        try {
-//            const response = await this.axiosClient.get(`vehicles/${vin}`);
-//            return response.data.vehicle;
-//        } catch (error) {
-//            this.handleError(error, errorCallback)
-//        }
-//    }
-//
-//    async getAllVehicles(errorCallback){
-//        try{
-//            const response = await this.axiosClient.get('/vehicles');
-//            return response.data.vehicleList;
-//        } catch (error){
-//            this.handleError(error, errorCallback)
-//        }
-//    }
+    async getVehicle(vin, errorCallback) {
+        try {
+            const response = await this.axiosClient.get(`vehicles/${vin}`);
+            return response.data.vehicle;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
 
-    async createVehicle(vin, make, model, year, errorCallback) {
+    async getAllVehicles(errorCallback){
+        try{
+            const response = await this.axiosClient.get('/vehicles');
+            return response.data.vehicleList;
+        } catch (error){
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    async createVehicle(vin, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can create vehicles.");
             const response = await this.axiosClient.post(`vehicles`, {
                 vin: vin,
                 make: make,
                 model: model,
-                year: year
+                year: year,
+                bodyClass: bodyClass,
+                vehicleType: vehicleType,
+                numOfDoors: numOfDoors,
+                manufacturerName: manufacturerName,
+                plantCountry: plantCountry,
+                plantState: plantState,
+                plantCity: plantCity,
+                engineCylinders: engineCylinders,
+                engineSize: engineSize,
+                engineHP: engineHP,
+                fuelType: fuelType
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`

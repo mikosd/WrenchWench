@@ -6,9 +6,9 @@ import DataStore from "../util/DataStore";
 class LandingPage extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['clientLoaded', 'mount', 'createTable', 'addVehiclesToPage'], this);
+        this.bindClassMethods(['clientLoaded', 'mount'], this);
         this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.addVehiclesToPage);
+        //this.dataStore.addChangeListener(this.addVehiclesToPage);
         this.header = new Header(this.dataStore);
         this.client = new WrenchWenchClient();
         this.clientLoaded();
@@ -36,9 +36,10 @@ class LandingPage extends BindingClass {
 //        }
 //        document.getElementById('logout').addEventListener('click', this.login);
     async mount() {
+        document.getElementById('create').addEventListener('click', this.submit);
         this.header.addHeaderToPage();
         this.client = new WrenchWenchClient();
-        this.clientLoaded();
+        //this.clientLoaded();
 
     }
 
@@ -46,47 +47,76 @@ class LandingPage extends BindingClass {
             await this.client.login();
     }
 
-    createTable(vehicles){
-            if (vehicles.length === 0) {
-                return '<h4>No results found</h4>';
-            }
+//    createTable(vehicles){
+//            if (vehicles.length === 0) {
+//                return '<h4>No results found</h4>';
+//            }
+//
+//            let html = '<table><tr><th>VIN</th><th>Model</th><th>Year</th></tr>';
+//            for (const res of vehicles) {
+//                html += `
+//                <tr>
+//                    <td>
+//                        <a href=viewVehicle.html?projectId=${res.vin}>${res.vin}</a>
+//                    </td>
+//                    <td>
+//                        ${res.model}
+//                    </td>
+//                    <td><a href="viewVehicle.html?vin=${res.vin}" class="view-button">View Vehicle</a>
+//                </tr>`;
+//            }
+//            html += '</table>';
+//
+//            return html;
+//        }
 
-            let html = '<table><tr><th>VIN</th><th>Model</th><th>Year</th></tr>';
-            for (const res of vehicles) {
-                html += `
-                <tr>
-                    <td>
-                        <a href=viewVehicle.html?projectId=${res.vin}>${res.vin}</a>
-                    </td>
-                    <td>
-                        ${res.model}
-                    </td>
-                    <td><a href="viewVehicle.html?vin=${res.vin}" class="view-button">View Vehicle</a>
-                </tr>`;
-            }
-            html += '</table>';
+//    addVehiclesToPage() {
+//            const vehicles = this.dataStore.get('vehicles');
+//            if (vehicles == null) {
+//                return;
+//            }
+//
+//            //document.getElementById('project-title').innerText = project.title;
+//            //document.getElementById('project-description').innerText = project.description;
+//
+//            let ticketHtml = '';
+//            let vin;
+//            for (vin of vehicles) {
+//                ticketHtml += '<div class="vehiclesDiv">' + vin + '</div>';
+//            }
+//
+//            document.getElementById('vehiclesDiv').innerHTML = this.createTable(vin);
+//    }
 
-            return html;
-        }
 
-    addVehiclesToPage() {
-            const vehicles = this.dataStore.get('vehicles');
-            if (vehicles == null) {
-                return;
-            }
+async submit(evt) {
+    evt.preventDefault();
 
-            //document.getElementById('project-title').innerText = project.title;
-            //document.getElementById('project-description').innerText = project.description;
+    const errorMessageDisplay = document.getElementById('error-message');
+    errorMessageDisplay.innerText = ``;
+    errorMessageDisplay.classList.add('hidden');
 
-            let ticketHtml = '';
-            let vin;
-            for (vin of vehicles) {
-                ticketHtml += '<div class="vehiclesDiv">' + vin + '</div>';
-            }
+    const createButton = document.getElementById('create');
+    const origButtonText = createButton.innerText;
+    createButton.innerText = 'Loading...';
 
-            document.getElementById('vehiclesDiv').innerHTML = this.createTable(vin);
+    const playlistName = document.getElementById('vin').value;
+
+
+    const vehicle = await this.client.landingPage(vin, (error) => {
+        createButton.innerText = origButtonText;
+        errorMessageDisplay.innerText = `Error: ${error.message}`;
+        errorMessageDisplay.classList.remove('hidden');
+    });
+    this.dataStore.set('vehicles', vehicles);
+}
+
+redirectToViewVehicle() {
+    const vehicles = this.dataStore.get('vehicles');
+    if (vehicles != null) {
+        window.location.href = `/viewVehicle.html?id=${vin}`;
     }
-
+}
 
 
 }

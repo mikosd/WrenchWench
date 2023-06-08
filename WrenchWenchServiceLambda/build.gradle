@@ -71,7 +71,7 @@ checkstyle {
         configFile = rootProject.file(configFilePath)
 
         if (configFile.exists()) {
-            break;
+            break
         }
 
         configFilePath = '../' + configFilePath
