@@ -240,15 +240,15 @@ Resources:
           Properties:
             Path: /vehicles/{vin}
             Method: get
-
-
+            Auth:
+              Authorizer: 'NONE'
 
   GetAllVehiclesLambda:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
       CodeUri: WrenchWenchServiceLambda
-      Handler: com.nashss.se.wrenchwenchservice.lambda.GetAllVehiclesLambda::handleRequest
+      Handler: com.nashss.se.WrenchWench.lambda.GetAllVehiclesLambda::handleRequest
       Runtime: java11
       Architectures:
         - x86_64
@@ -262,6 +262,28 @@ Resources:
           Properties:
             Path: /vehicles
             Method: get
+            Auth:
+              Authorizer: 'NONE'
+
+  CreateVehicleLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: WrenchWenchServiceLambda
+      Handler: com.nashss.se.WrenchWench.lambda.CreateVehicleLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        WrenchWenchService:
+          Type: Api
+          Properties:
+            Path: /vehicles
+            Method: post
 
 
 #  SearchPlaylistsLambda:
@@ -308,26 +330,7 @@ Resources:
 #            Auth:
 #              Authorizer: 'NONE'
 #
-#  CreatePlaylistLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: MusicPlaylistServiceLambda
-#      Handler: com.nashss.se.musicplaylistservice.lambda.CreatePlaylistLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MusicPlaylistService:
-#          Type: Api
-#          Properties:
-#            Path: /playlists
-#            Method: post
-#
+
 #  UpdatePlaylistLambda:
 #    Type: AWS::Serverless::Function
 #    Properties:

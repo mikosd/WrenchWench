@@ -1,7 +1,7 @@
 import axios from "axios";
 import BindingClass from "../util/bindingClass";
 import Authenticator from "./authenticator";
-import ClientMixin from "../util/ClientMixin";
+//import ClientMixin from "../util/ClientMixin";
 
 /**
  * Client to call the WrenchWenchService
@@ -12,12 +12,12 @@ import ClientMixin from "../util/ClientMixin";
  * https://javascript.info/mixins
   */
 export default class WrenchWenchClient extends BindingClass {
-
     constructor(props = {}) {
         super();
 
         const methodsToBind = ['clientLoaded', 'login', 'logout',
-                               'getVehicle', 'getAllVehicles', 'isLoggedIn'];
+                               'getVehicle', 'getAllVehicles', 'getIdentity',
+                               'createVehicle'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();
@@ -58,13 +58,13 @@ export default class WrenchWenchClient extends BindingClass {
         }
     }
 
-    async isLoggedIn(errorCallback){
-        const isLoggedIn = await this.authenticator.isUserLoggedIn();
-        if (!isLoggedIn){
-            return undefined;
-        }
-        return true;
-    }
+//    async isLoggedIn(errorCallback){
+//        const isLoggedIn = await this.authenticator.isUserLoggedIn();
+//        if (!isLoggedIn){
+//            return undefined;
+//        }
+//        return true;
+//    }
 
     async login() {
         this.authenticator.login();
@@ -75,12 +75,12 @@ export default class WrenchWenchClient extends BindingClass {
     }
 
     async getTokenOrThrow(unauthenticatedErrorMessage) {
-            const isLoggedIn = await this.authenticator.isUserLoggedIn();
-            if (!isLoggedIn) {
-                throw new Error(unauthenticatedErrorMessage);
-            }
+        const isLoggedIn = await this.authenticator.isUserLoggedIn();
+        if (!isLoggedIn) {
+            throw new Error(unauthenticatedErrorMessage);
+        }
 
-            return await this.authenticator.getUserToken();
+        return await this.authenticator.getUserToken();
     }
     /**
      * Gets the vehicle for the given vin.
@@ -88,38 +88,57 @@ export default class WrenchWenchClient extends BindingClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The vehicle's metadata.
      */
-    async getVehicle(vin, errorCallback) {
+//    async getVehicle(vin, errorCallback) {
+//        try {
+//            const response = await this.axiosClient.get(`vehicles/${vin}`);
+//            return response.data.vehicle;
+//        } catch (error) {
+//            this.handleError(error, errorCallback)
+//        }
+//    }
+//
+//    async getAllVehicles(errorCallback){
+//        try{
+//            const response = await this.axiosClient.get('/vehicles');
+//            return response.data.vehicleList;
+//        } catch (error){
+//            this.handleError(error, errorCallback)
+//        }
+//    }
+
+    async createVehicle(vin, make, model, year, errorCallback) {
         try {
-            const response = await this.axiosClient.get(`vehicle/${vin}`);
+            const token = await this.getTokenOrThrow("Only authenticated users can create vehicles.");
+            const response = await this.axiosClient.post(`vehicles`, {
+                vin: vin,
+                make: make,
+                model: model,
+                year: year
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             return response.data.vehicle;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
     }
 
-    async getAllVehicles(errorCallback){
-        try{
-            const response = await this.axiosClient.get('vehicles/');
-            return response.data.vehicleList;
-        } catch (error){
-            this.handleError(error, errorCallback)
-        }
-    }
-
-    async getProfile(id, errorCallback){
-        try {
-            console.log(id + " id");
-            const token = await this.getTokenOrThrow("Only authenticated users can view a profile");
-            const response = await this.axiosClient.get('profiles/${id}', {
-                Authorization: 'Bearer ${token}',
-                'Content-Type': 'application/json'
-            });
-
-            return response.data;
-        } catch(error) {
-            this.handleError(error, errorCallback)
-        }
-    }
+//    async getProfile(id, errorCallback){
+//        try {
+//            console.log(id + " id");
+//            const token = await this.getTokenOrThrow("Only authenticated users can view a profile");
+//            const response = await this.axiosClient.get('profiles/${id}', {
+//                Authorization: 'Bearer ${token}',
+//                'Content-Type': 'application/json'
+//            });
+//
+//            return response.data;
+//        } catch(error) {
+//            this.handleError(error, errorCallback)
+//        }
+//    }
 
     /**
      * Helper method to log the error and run any error functions.

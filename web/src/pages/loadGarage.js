@@ -69,9 +69,8 @@ class LoadGarage extends BindingClass {
         }
 
         let recordHtml = '';
-        let vin;
-        for (vin of vehicles) {
-            recordHtml += '<div class="vehicles"> ' + vin + '</div>';
+        for (vehicle of vehicles) {
+            recordHtml += '<div class="vehicles"> ${vehicle.vin} </div>';
         }
 
         document.getElementById('vehicles').innerHTML = this.createTable(vehicles);
