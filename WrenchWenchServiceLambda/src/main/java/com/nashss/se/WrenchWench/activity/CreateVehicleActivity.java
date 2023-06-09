@@ -27,6 +27,7 @@ public class CreateVehicleActivity {
         log.info("Received CreateVehicleRequest {}", createVehicleRequest);
 
         if (VinUtils.validateVin(createVehicleRequest.getVin())) {
+            System.out.println("Reached validator");
 
             Vehicle newVehicle = VinUtils.buildVehicleFromVin(createVehicleRequest.getVin());
 
@@ -46,8 +47,10 @@ public class CreateVehicleActivity {
 //        newVehicle.setEngineHP(createVehicleRequest.getEngineHP());
 //        newVehicle.setEngineHP(createVehicleRequest.getEngineHP());
 
-            vehicleDao.saveVehicle(newVehicle);
-            VehicleModel vehicleModel = new ModelConverter().toVehicleModel(newVehicle);
+            System.out.println(newVehicle);
+
+            System.out.println(newVehicle.getVin());
+            VehicleModel vehicleModel = new ModelConverter().toVehicleModel(vehicleDao.saveVehicle(newVehicle));
             return CreateVehicleResult.builder()
                     .withVehicle(vehicleModel)
                     .build();

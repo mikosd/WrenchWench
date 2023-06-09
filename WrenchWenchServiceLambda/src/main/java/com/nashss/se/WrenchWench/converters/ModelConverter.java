@@ -18,6 +18,17 @@ public class ModelConverter {
                 .withMake(vehicle.getMake())
                 .withModel(vehicle.getModel())
                 .withYear(vehicle.getYear())
+                .withBodyClass(vehicle.getBodyClass())
+                .withVehicleType(vehicle.getVehicleType())
+                .withNumOfDoors(vehicle.getNumOfDoors())
+                .withManufacturerName(vehicle.getManufacturerName())
+                .withPlantCountry(vehicle.getPlantCountry())
+                .withPlantState(vehicle.getPlantState())
+                .withPlantCity(vehicle.getPlantCity())
+                .withEngineCylinders(vehicle.getEngineCylinders())
+                .withEngineSize(vehicle.getEngineSize())
+                .withEngineHP(vehicle.getEngineHP())
+                .withFuelType(vehicle.getFuelType())
                 .build();
     }
 

@@ -59,7 +59,7 @@ public class VinUtils {
 
         String apiUrl = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVin/" + vin + "?format=json";
 
-        Vehicle vehicle = null;
+        Vehicle vehicle = new Vehicle();
         try {
             // Create URL object
             URL url = new URL(apiUrl);
@@ -69,10 +69,6 @@ public class VinUtils {
 
             // Set request method
             conn.setRequestMethod("GET");
-
-            // Get the response code
-            int responseCode = conn.getResponseCode();
-            System.out.println("Response Code: " + responseCode);
 
             // Read the response
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -87,7 +83,7 @@ public class VinUtils {
             String responseString = response.toString();
 
             // Print the response
-            System.out.println("Response Body: " + responseString);
+            //System.out.println("Response Body: " + responseString);
 
             JSONObject jsonResponse = new JSONObject(response.toString());
 
@@ -100,13 +96,12 @@ public class VinUtils {
                 int variableId = result.getInt("VariableId");
                 String value = result.optString("Value");
 
-                CreateVehicleActivity createVehicleActivity;
-
-                vehicle = new Vehicle();
+                vehicle.setVin(vin);
 
                 switch (variableId) {
                     case 5:
                         vehicle.setBodyClass(value);
+                        System.out.println("BodyClass - " + value);
                         break;
                     case 9:
                         vehicle.setEngineCylinders(value);
@@ -125,6 +120,7 @@ public class VinUtils {
                         break;
                     case 28:
                         vehicle.setModel(value);
+                        System.out.println("Model - " + value);
                         break;
                     case 29:
                         vehicle.setYear(value);
@@ -145,12 +141,6 @@ public class VinUtils {
                         vehicle.setPlantState(value);
                         break;
                     default:
-                        // Handle any unrecognized variableId here
-                }
-
-                if (value != null && !value.isEmpty() && !value.equals("Not Applicable")) {
-                    System.out.println("VariableId: " + variableId);
-                    System.out.println("Value: " + value + '\n');
                 }
             }
 
