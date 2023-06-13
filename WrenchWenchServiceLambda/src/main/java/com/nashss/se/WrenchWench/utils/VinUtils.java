@@ -80,11 +80,6 @@ public class VinUtils {
             }
             reader.close();
 
-            String responseString = response.toString();
-
-            // Print the response
-            //System.out.println("Response Body: " + responseString);
-
             JSONObject jsonResponse = new JSONObject(response.toString());
 
             // Get the "Results" array from the JSONObject

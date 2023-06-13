@@ -9,12 +9,25 @@
 <body>
 <header class="header" id="header"></header>
 <div class="title-div">
+    <a href="#" class="button" id="createButton">Enter a VIN</a>
     <h2>Vehicles Table</h2>
 </div>
+<div>
+    <form class="card-content" id="inputVinForm">
+        <p class="form-field">
+            <label>Search by name or tag</label>
+            <input type="text" class="validated-field" id="input-vin" placeholder="Enter VIN" autofocus>
+            <sub>Search for a vehicle.</sub>
+        </p>
+    </form>
+    <div>
+        <div id="vin"></div>
+        <div id="make"></div>
+        <div id="model"></div>
+        <div id="year"></div>
+    </div>
+</div>
 
-<h2>Vehicle Details</h2>
-
-<div id="viewVehiclesTable"></div>
 
 
 </body>

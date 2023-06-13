@@ -17,7 +17,7 @@ export default class WrenchWenchClient extends BindingClass {
 
         const methodsToBind = ['clientLoaded', 'login', 'logout',
                                'getVehicle', 'getAllVehicles', 'getIdentity',
-                               'createVehicle'];
+                               'getProfile', 'createVehicle'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();
@@ -58,13 +58,13 @@ export default class WrenchWenchClient extends BindingClass {
         }
     }
 
-//    async isLoggedIn(errorCallback){
-//        const isLoggedIn = await this.authenticator.isUserLoggedIn();
-//        if (!isLoggedIn){
-//            return undefined;
-//        }
-//        return true;
-//    }
+    async isLoggedIn(errorCallback){
+        const isLoggedIn = await this.authenticator.isUserLoggedIn();
+        if (!isLoggedIn){
+            return undefined;
+        }
+        return true;
+    }
 
     async login() {
         this.authenticator.login();
@@ -91,7 +91,7 @@ export default class WrenchWenchClient extends BindingClass {
     async getVehicle(vin, errorCallback) {
         try {
             const response = await this.axiosClient.get(`vehicles/${vin}`);
-            return response.data.vehicle;
+            return response.data.vehicles;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
@@ -99,7 +99,7 @@ export default class WrenchWenchClient extends BindingClass {
 
     async getAllVehicles(errorCallback){
         try{
-            const response = await this.axiosClient.get('/vehicles');
+            const response = await this.axiosClient.get(`/vehicles`);
             return response.data.vehicleList;
         } catch (error){
             this.handleError(error, errorCallback)
@@ -107,49 +107,68 @@ export default class WrenchWenchClient extends BindingClass {
     }
 
     async createVehicle(vin, errorCallback) {
+    try {
+        const token = await this.getTokenOrThrow("Only authenticated users can create vehicles.");
+
+        const vehicle = {
+          vin: vin,
+        };
+
+        const response = await this.axiosClient.post(`vehicles`, vehicle, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        return response.data.vehicle;
+      } catch (error) {
+        this.handleError(error, errorCallback);
+      }
+    }
+
+//        try {
+//            const token = await this.getTokenOrThrow("Only authenticated users can create vehicles.");
+//            const response = await this.axiosClient.post(`vehicles`, {
+//                vin: vin,
+//                make: make,
+//                model: model,
+//                year: year,
+//                bodyClass: bodyClass,
+//                vehicleType: vehicleType,
+//                numOfDoors: numOfDoors,
+//                manufacturerName: manufacturerName,
+//                plantCountry: plantCountry,
+//                plantState: plantState,
+//                plantCity: plantCity,
+//                engineCylinders: engineCylinders,
+//                engineSize: engineSize,
+//                engineHP: engineHP,
+//                fuelType: fuelType
+//            }, {
+//                headers: {
+//                    Authorization: `Bearer ${token}`
+//                }
+//            });
+//            return response.data.vehicle;
+//        } catch (error) {
+//            this.handleError(error, errorCallback)
+//        }
+
+
+    async getProfile(id, errorCallback){
         try {
-            const token = await this.getTokenOrThrow("Only authenticated users can create vehicles.");
-            const response = await this.axiosClient.post(`vehicles`, {
-                vin: vin,
-                make: make,
-                model: model,
-                year: year,
-                bodyClass: bodyClass,
-                vehicleType: vehicleType,
-                numOfDoors: numOfDoors,
-                manufacturerName: manufacturerName,
-                plantCountry: plantCountry,
-                plantState: plantState,
-                plantCity: plantCity,
-                engineCylinders: engineCylinders,
-                engineSize: engineSize,
-                engineHP: engineHP,
-                fuelType: fuelType
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+            console.log(id + " id");
+            const token = await this.getTokenOrThrow("Only authenticated users can view a profile");
+            const response = await this.axiosClient.get('profiles/${id}', {
+                Authorization: 'Bearer ${token}',
+                'Content-Type': 'application/json'
             });
-            return response.data.vehicle;
-        } catch (error) {
+
+            return response.data;
+        } catch(error) {
             this.handleError(error, errorCallback)
         }
     }
-
-//    async getProfile(id, errorCallback){
-//        try {
-//            console.log(id + " id");
-//            const token = await this.getTokenOrThrow("Only authenticated users can view a profile");
-//            const response = await this.axiosClient.get('profiles/${id}', {
-//                Authorization: 'Bearer ${token}',
-//                'Content-Type': 'application/json'
-//            });
-//
-//            return response.data;
-//        } catch(error) {
-//            this.handleError(error, errorCallback)
-//        }
-//    }
 
     /**
      * Helper method to log the error and run any error functions.

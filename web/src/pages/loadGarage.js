@@ -31,7 +31,7 @@ class LoadGarage extends BindingClass {
                 <td>
                     ${res.year}
                 </td>
-                <td><a href="viewProject.html?projectId=${res.projectId}" class="view-button">View Project</a>
+                <td><a href="viewVehicle.html?vin=${res.vin}" class="view-button">View Project</a>
             </tr>`;
         }
         html += '</table>';
@@ -73,7 +73,7 @@ class LoadGarage extends BindingClass {
             recordHtml += '<div class="vehicles"> ${vehicle.vin} </div>';
         }
 
-        document.getElementById('vehicles').innerHTML = this.createTable(vehicles);
+        document.getElementById('vehiclesDiv').innerHTML = this.createTable(vehicles);
     }
 }
 

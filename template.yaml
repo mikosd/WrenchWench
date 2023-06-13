@@ -240,8 +240,6 @@ Resources:
           Properties:
             Path: /vehicles/{vin}
             Method: get
-            Auth:
-              Authorizer: 'NONE'
 
   GetAllVehiclesLambda:
     Type: AWS::Serverless::Function
@@ -280,7 +278,7 @@ Resources:
         WrenchWenchService:
           Type: Api
           Properties:
-            Path: /vehicles/{vin}
+            Path: /vehicles
             Method: post
 
 #  SearchPlaylistsLambda:

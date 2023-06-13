@@ -1,7 +1,7 @@
 import WrenchWenchClient from '../api/wrenchWenchClient';
 import Header from '../components/header';
-import BindingClass from "../util/bindingClass";
-import DataStore from "../util/DataStore";
+import BindingClass from '../util/bindingClass';
+import DataStore from '../util/DataStore';
 
 /**
  * Logic needed for the view playlist page of the website.
@@ -9,82 +9,69 @@ import DataStore from "../util/DataStore";
 class ViewVehicle extends BindingClass {
         constructor() {
             super();
-            this.bindClassMethods(['clientLoaded', 'mount', 'createTable', 'addVehicleToPage'], this);
+            this.bindClassMethods(['mount', 'addVehicleToPage', 'createTable', 'getVehicleForPage'], this);
             this.dataStore = new DataStore();
             this.dataStore.addChangeListener(this.addVehicleToPage);
             this.header = new Header(this.dataStore);
-            console.log("viewvehicle constructor");
         }
 
         /**
-         * Once the client is loaded, get the playlist metadata and song list.
-         */
-        async clientLoaded() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const vin = urlParams.get('vin');
-            //document.getElementById('vehicle-name').innerText = "Loading Vehicle ...";
-            const vehicle = await this.client.getVehicle(vin);
-            this.dataStore.set('vehicle', vehicle);
-//            document.getElementById('records').innerText = "(loading records...)";
-//            const records = await this.client.getVehicleRecords(vin);
-//            this.dataStore.set('records', records);
-        }
-
-
-
-        /**
-         * Add the header to the page and load the MusicPlaylistClient.
+         * Add the header to the page and load the WrenchWenchClient.
          */
         mount() {
             //document.getElementById('add-record').addEventListener('click', this.addRecord);
             this.header.addHeaderToPage();
             this.client = new WrenchWenchClient();
-            this.clientLoaded();
+            this.getVehicleForPage();
         }
 
-         createTable(vehicle){
-                 if (vehicle.length === 0) {
-                     return '<h4>No results found</h4>';
-                 }
+        async getVehicleForPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const vin = urlParams.get('vin');
+            const vehicles = await this.client.getVehicle(vin);
+            this.dataStore.set('vehicles', vehicles);
+            this.addVehicleToPage();
+            console.log("vehicles is stored");
+        }
 
-                 let html = '<table><tr><th>VIN</th><th>Make</th><th>Model</th><th>Year</th></tr>';
-                 for (const res of vehicle) {
-                     html += `
-                     <tr>
-                         <td>
-                             <a href=viewVehicle.html?vin=${res.vin}>${res.model}</a>
-                         </td>
-                         <td>
-                             ${res.year}
-                         </td>
-                         <td><a href="viewProject.html?projectId=${res.projectId}" class="view-button">View Project</a>
-                     </tr>`;
-                 }
-                 html += '</table>';
 
-                 return html;
-             }
+
+        createTable(vehicles){
+            if (vehicles.length === 0) {
+                return '<h4>No results found</h4>';
+            }
+
+            let html = '<table><tr><th>VIN</th><th>Make</th><th>Model</th><th>Year</th></tr>';
+
+                html += `
+                <tr>
+                    <td>
+                        <a href=viewVehicle.html?vin=${vehicles.vin}>${vehicles.model}</a>
+                    </td>
+                    <td>
+                        ${vehicles.year}
+                    </td>
+                    <td><a href="viewVehicle.html?vin=${vehicles.vin}" class="view-button">View Project</a>
+                </tr>`;
+            html += '</table>';
+
+            return html;
+        }
 
 
         /**
          * When the playlist is updated in the datastore, update the playlist metadata on the page.
          */
-        addVehicleToPage() {
-            const vehicle = this.dataStore.get('vehicle');
+        async addVehicleToPage() {
+            const vehicle = this.dataStore.get('vehicles');
             if (vehicle == null) {
                 return;
             }
-
-            document.getElementById('vin').innerText = vehicle.vin;
-            document.getElementById('make').innerText = vehicle.make;
-            document.getElementById('model').innerText = vehicle.model;
-            document.getElementById('year').innerText = vehicle.year;
-
-
-            let tagHtml = '';
-            let tag = '';
-            tagHtml += '<div class="tag">' + tag + '</div>';
-            document.getElementById('tags').innerHTML = tagHtml;
+            document.getElementById('vin').textContent = `VIN: ${vehicle.vin}`;
+            document.getElementById('make').textContent = `Make: ${vehicle.make}`;
+            document.getElementById('model').textContent = `Model: ${vehicle.model}`;
+            document.getElementById('year').textContent = `Year: ${vehicle.year}`;
+            //document.getElementById('viewVehiclesTable').innerHTML = this.createTable(vehicle);
         }
 }
     /**

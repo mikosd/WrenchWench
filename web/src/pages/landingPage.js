@@ -1,14 +1,14 @@
-import WrenchWenchClient from "../api/wrenchWenchClient"
-import BindingClass from "../util/bindingClass";
+import WrenchWenchClient from '../api/wrenchWenchClient';
+import BindingClass from '../util/bindingClass';
 import Header from '../components/header';
-import DataStore from "../util/DataStore";
+import DataStore from '../util/DataStore';
 
 class LandingPage extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['clientLoaded', 'mount'], this);
+        this.bindClassMethods(['clientLoaded', 'mount', 'login', 'redirectToViewVehicle', 'addEventListener'], this);
         this.dataStore = new DataStore();
-        //this.dataStore.addChangeListener(this.addVehiclesToPage);
+        this.dataStore.addChangeListener(this.addVehiclesToPage);
         this.header = new Header(this.dataStore);
         this.client = new WrenchWenchClient();
         this.clientLoaded();
@@ -22,6 +22,7 @@ class LandingPage extends BindingClass {
 //        return true;
 //    }
 
+
     async clientLoaded() {
         const vehicles = await this.client.getAllVehicles();
         this.dataStore.set('vehicles', vehicles);
@@ -29,94 +30,51 @@ class LandingPage extends BindingClass {
     }
 
 
-//        const loggedIn = await this.client.isLoggedIn();
-//        console.log("HERE", loggedIn);
-//        if(loggedIn){
-//            window.location.href= "/index.html";
-//        }
-//        document.getElementById('logout').addEventListener('click', this.login);
     async mount() {
-        document.getElementById('create').addEventListener('click', this.submit);
+        document.getElementById('submitVinButton').addEventListener('click', this.submit);
         this.header.addHeaderToPage();
         this.client = new WrenchWenchClient();
-        //this.clientLoaded();
-
+        this.clientLoaded();
     }
 
     async login(){
-            await this.client.login();
+        await this.client.login();
     }
 
-//    createTable(vehicles){
-//            if (vehicles.length === 0) {
-//                return '<h4>No results found</h4>';
-//            }
-//
-//            let html = '<table><tr><th>VIN</th><th>Model</th><th>Year</th></tr>';
-//            for (const res of vehicles) {
-//                html += `
-//                <tr>
-//                    <td>
-//                        <a href=viewVehicle.html?projectId=${res.vin}>${res.vin}</a>
-//                    </td>
-//                    <td>
-//                        ${res.model}
-//                    </td>
-//                    <td><a href="viewVehicle.html?vin=${res.vin}" class="view-button">View Vehicle</a>
-//                </tr>`;
-//            }
-//            html += '</table>';
-//
-//            return html;
-//        }
 
-//    addVehiclesToPage() {
-//            const vehicles = this.dataStore.get('vehicles');
-//            if (vehicles == null) {
-//                return;
-//            }
-//
-//            //document.getElementById('project-title').innerText = project.title;
-//            //document.getElementById('project-description').innerText = project.description;
-//
-//            let ticketHtml = '';
-//            let vin;
-//            for (vin of vehicles) {
-//                ticketHtml += '<div class="vehiclesDiv">' + vin + '</div>';
-//            }
-//
-//            document.getElementById('vehiclesDiv').innerHTML = this.createTable(vin);
-//    }
-
-
-async submit(evt) {
+    async submit(evt) {
     evt.preventDefault();
 
     const errorMessageDisplay = document.getElementById('error-message');
     errorMessageDisplay.innerText = ``;
     errorMessageDisplay.classList.add('hidden');
 
-    const createButton = document.getElementById('create');
-    const origButtonText = createButton.innerText;
-    createButton.innerText = 'Loading...';
+    const submitButton = document.getElementById('submitVinButton');
+    const origButtonText = submitButton.innerText;
+    submitButton.innerText = 'Loading...';
 
-    const playlistName = document.getElementById('vin').value;
+//    var submitVinButton = document.getElementById('submitVinButton');
+//    submitVinButton.addEventListener('click', function(){
+//        const vin = document.getElementById('inputVin').value;
+//    });
 
+    const vin = document.getElementById('inputVin').value;
 
-    const vehicle = await this.client.landingPage(vin, (error) => {
+    const vehicles = await this.client.landingPage(vin, (error) => {
         createButton.innerText = origButtonText;
         errorMessageDisplay.innerText = `Error: ${error.message}`;
         errorMessageDisplay.classList.remove('hidden');
     });
     this.dataStore.set('vehicles', vehicles);
-}
-
-redirectToViewVehicle() {
-    const vehicles = this.dataStore.get('vehicles');
-    if (vehicles != null) {
-        window.location.href = `/viewVehicle.html?id=${vin}`;
     }
-}
+
+   redirectToViewVehicle() {
+        const vehicles = this.dataStore.get('vehicles');
+        if (vehicles != null) {
+            window.location.href = `/viewVehicle.html?id=${vehicles.vin}`;
+        }
+   }
+
 
 
 }
