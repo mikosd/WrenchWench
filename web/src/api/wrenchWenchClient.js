@@ -90,8 +90,15 @@ export default class WrenchWenchClient extends BindingClass {
      */
     async getVehicle(vin, errorCallback) {
         try {
-            const response = await this.axiosClient.get(`vehicles/${vin}`);
-            return response.data.vehicles;
+            const token = await this.getTokenOrThrow("Only authenticated users can view vehicles.");
+            const response = await this.axiosClient.get(`vehicles/${vin}`, {
+
+            },{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.vehicle;
         } catch (error) {
             this.handleError(error, errorCallback)
         }

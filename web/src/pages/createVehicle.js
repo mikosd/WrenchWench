@@ -23,14 +23,6 @@ class CreateVehicle extends BindingClass {
      async submit(evt) {
         evt.preventDefault();
 
-//        const errorMessageDisplay = document.getElementById('error-message');
-//        errorMessageDisplay.innerText = ``;
-//        errorMessageDisplay.classList.add('hidden');
-
-//        const submitVinButton = document.getElementById('submitVinButton');
-//        const origButtonText = submitVinButton.innerText;
-//        submitVinButton.innerText = 'Loading...';
-
         const vin = document.getElementById('inputVin').value; // Get the value from the "inputVin" input field
         const vehicles = await this.client.createVehicle(vin);
 

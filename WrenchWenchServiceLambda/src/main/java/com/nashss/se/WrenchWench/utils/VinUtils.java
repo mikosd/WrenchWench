@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 
 public class VinUtils {
     private static final int[] values = { 1, 2, 3, 4, 5, 6, 7, 8, 0, 1,
@@ -90,7 +91,9 @@ public class VinUtils {
                 JSONObject result = resultsArray.getJSONObject(i);
                 int variableId = result.getInt("VariableId");
                 String value = result.optString("Value");
-
+                if(value.equals("null")){
+                    value = "N/A";
+                }
                 vehicle.setVin(vin);
 
                 switch (variableId) {
