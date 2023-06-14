@@ -43,6 +43,15 @@ public class ModelConverter {
         return vehicleModelsList;
     }
 
+    public List<RecordModel> toRecordModelList(List<Records> recordsList){
+        List<RecordModel> recordModels = new ArrayList<>();
+
+        for (Records record : recordsList){
+            recordModels.add(toRecordModel(record));
+        }
+        return recordModels;
+    }
+
     public RecordModel toRecordModel(Records newRecord) {
         String vin = newRecord.getVin();
         if(vin == null)
