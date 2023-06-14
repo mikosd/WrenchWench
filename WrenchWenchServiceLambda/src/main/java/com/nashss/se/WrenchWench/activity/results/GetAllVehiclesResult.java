@@ -1,7 +1,5 @@
 package com.nashss.se.WrenchWench.activity.results;
 
-
-
 import com.nashss.se.WrenchWench.models.VehicleModel;
 
 import java.util.ArrayList;

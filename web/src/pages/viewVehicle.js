@@ -1,90 +1,147 @@
 import WrenchWenchClient from '../api/wrenchWenchClient';
 import Header from '../components/header';
-import BindingClass from "../util/bindingClass";
-import DataStore from "../util/DataStore";
+import BindingClass from '../util/bindingClass';
+import DataStore from '../util/DataStore';
 
 /**
- * Logic needed for the view playlist page of the website.
+ * Logic needed for the view vehicle page of the website.
  */
 class ViewVehicle extends BindingClass {
         constructor() {
             super();
-            this.bindClassMethods(['clientLoaded', 'mount', 'createTable', 'addVehicleToPage'], this);
+            this.bindClassMethods(['mount', 'createVehicleTable', 'getVehicleForPage', 'addVehicleToPage'], this);
             this.dataStore = new DataStore();
-            this.dataStore.addChangeListener(this.addVehicleToPage);
             this.header = new Header(this.dataStore);
-            console.log("viewvehicle constructor");
+            this.dataStore.addChangeListener(this.addVehicleToPage);
         }
 
         /**
-         * Once the client is loaded, get the playlist metadata and song list.
-         */
-        async clientLoaded() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const vin = urlParams.get('vin');
-            //document.getElementById('vehicle-name').innerText = "Loading Vehicle ...";
-            const vehicle = await this.client.getVehicle(vin);
-            this.dataStore.set('vehicle', vehicle);
-//            document.getElementById('records').innerText = "(loading records...)";
-//            const records = await this.client.getVehicleRecords(vin);
-//            this.dataStore.set('records', records);
-        }
-
-
-
-        /**
-         * Add the header to the page and load the MusicPlaylistClient.
+         * Add the header to the page and load the WrenchWenchClient.
          */
         mount() {
-            //document.getElementById('add-record').addEventListener('click', this.addRecord);
             this.header.addHeaderToPage();
             this.client = new WrenchWenchClient();
-            this.clientLoaded();
+            this.getVehicleForPage();
         }
 
-         createTable(vehicle){
-                 if (vehicle.length === 0) {
-                     return '<h4>No results found</h4>';
-                 }
-
-                 let html = '<table><tr><th>VIN</th><th>Make</th><th>Model</th><th>Year</th></tr>';
-                 for (const res of vehicle) {
-                     html += `
-                     <tr>
-                         <td>
-                             <a href=viewVehicle.html?vin=${res.vin}>${res.model}</a>
-                         </td>
-                         <td>
-                             ${res.year}
-                         </td>
-                         <td><a href="viewProject.html?projectId=${res.projectId}" class="view-button">View Project</a>
-                     </tr>`;
-                 }
-                 html += '</table>';
-
-                 return html;
-             }
+        async getVehicleForPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const vin = urlParams.get('vin');
+            const vehicles = await this.client.getVehicle(vin);
+            if (vehicles) {
+              this.dataStore.set('vehicles', vehicles);
+              this.createVehicleTable(vehicles);
+              console.log("Vehicle is stored");
+            } else {
+              console.log("Vehicle not found");
+            }
+        }
 
 
         /**
-         * When the playlist is updated in the datastore, update the playlist metadata on the page.
+         * Create a table for the vehicles
+         */
+        createVehicleTable(vehicles){
+            const tableContainer = document.getElementById('table-container');
+
+            tableContainer.innerHTML =
+                 `<div class="table-responsive-xl">
+                      <table class="table">
+                        <tr>
+                          <th>VIN</th>
+                          <th>Make</th>
+                          <th>Model</th>
+                          <th>Year</th>
+                          <th>Body Class</th>
+                          <th>Type</th>
+                          <th>Numbers of Doors</th>
+                          <th>Manufacturer</th>
+                          <th>Country</th>
+                          <th>State</th>
+                          <th>City</th>
+                          <th>Fuel-Type</th>
+                        </tr>
+
+                        <tr>
+                          <td>
+                          <a href=viewVehicle.html/?vin=${vehicles.vin}>${vehicles.vin}</a>
+                          </td>
+
+                          <td>
+                            ${vehicles.make}
+                          </td>
+
+                          <td>
+                            ${vehicles.model}
+                          </td>
+
+                          <td>
+                            ${vehicles.year}
+                          </td>
+
+                          <td>
+                            ${vehicles.bodyClass}
+                          </td>
+
+                          <td>
+                            ${vehicles.vehicleType}
+                          </td>
+
+                          <td>
+                            ${vehicles.numOfDoors}
+                          </td>
+
+                          <td>
+                            ${vehicles.manufacturerName}
+                          </td>
+
+                          <td>
+                            ${vehicles.plantCountry}
+                          </td>
+
+                          <td>
+                           ${vehicles.plantState}
+                          </td>
+
+                          <td>
+                            ${vehicles.plantCity}
+                          </td>
+
+                          <td>
+                            ${vehicles.engineCylinders}
+                          </td>
+
+                          <td>
+                            ${vehicles.engineSize}
+                          </td>
+
+                          <td>
+                            ${vehicles.engineHP}
+                          </td>
+
+                          <td>
+                            ${vehicles.fuelType}
+                          </td>
+
+                          <td>
+                          <a href="viewVehicle.html?vin=${vehicles.vin}" class="view-button">View Vehicle</a>
+                          </td>
+                        </tr>
+            </table>
+            </div>`;
+        }
+
+
+        /**
+         * When the Vehicle is updated in the datastore, update the Vehicle metadata on the page.
          */
         addVehicleToPage() {
-            const vehicle = this.dataStore.get('vehicle');
-            if (vehicle == null) {
-                return;
+            const vehicles = this.dataStore.get('vehicles');
+            if(vehicles == null){
+            return;
             }
 
-            document.getElementById('vin').innerText = vehicle.vin;
-            document.getElementById('make').innerText = vehicle.make;
-            document.getElementById('model').innerText = vehicle.model;
-            document.getElementById('year').innerText = vehicle.year;
-
-
-            let tagHtml = '';
-            let tag = '';
-            tagHtml += '<div class="tag">' + tag + '</div>';
-            document.getElementById('tags').innerHTML = tagHtml;
+            //document.getElementById('tableContainer').innerHTML = this.createVehicleTable(vehicles);
         }
 }
     /**
@@ -93,6 +150,9 @@ class ViewVehicle extends BindingClass {
     const main = async () => {
         const viewVehicle = new ViewVehicle();
         viewVehicle.mount();
+        $('#myCollapsible').collapse({
+          toggle: false
+        });
     };
 
     window.addEventListener('DOMContentLoaded', main);

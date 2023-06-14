@@ -1,0 +1,121 @@
+openapi: 3.0.0
+info:
+  title: Wrench Wench Service
+  description: "This is the API definition for the Wrench Wench Service."
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+
+tags:
+  - name: Vehicles
+    description: Create and Read vehicles
+
+  - name: Records
+    description: Create, Read, Update, Delete records
+
+paths:
+  /vehicles:
+    post:
+      tags:
+        - Vehicles
+      summary: Create a new vehicle (CreateVehicleLambda)
+      description: Add a new vehicle
+      requestBody:
+        description: Add a new vehicle by it's VIN
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vin:
+                  type: string
+                  example: JM1NA3518p1419935
+      responses:
+        "200":
+          description: A vehicle object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  make:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: string
+                  bodyClass:
+                    type: string
+                  vehicleType:
+                    type: string
+                  numOfDoors:
+                    type: string
+                  manufacturerName:
+                    type: string
+                  plantCountry:
+                    type: string
+                  plantState:
+                    type: string
+                  plantCity:
+                    type: string
+                  engineCylinders:
+                    type: string
+                  engineSize:
+                    type: string
+                  engineHP:
+                    type: string
+                  fuelType:
+                    type: string
+  /vehicles/{vin}:
+    get:
+      tags:
+        - Vehicles
+      summary: Create a new vehicle (CreateVehicleLambda)
+      description: Add a new vehicle
+      requestBody:
+        description: Add a new vehicle by it's VIN
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vin:
+                  type: string
+                  example: JM1NA3518p1419935
+      responses:
+        "200":
+          description: A vehicle object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  make:
+                    type: string
+                  model:
+                    type: string
+                  year:
+                    type: string
+                  bodyClass:
+                    type: string
+                  vehicleType:
+                    type: string
+                  numOfDoors:
+                    type: string
+                  manufacturerName:
+                    type: string
+                  plantCountry:
+                    type: string
+                  plantState:
+                    type: string
+                  plantCity:
+                    type: string
+                  engineCylinders:
+                    type: string
+                  engineSize:
+                    type: string
+                  engineHP:
+                    type: string
+                  fuelType:
+                    type: string

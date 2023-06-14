@@ -1,7 +1,7 @@
 import axios from "axios";
 import BindingClass from "../util/bindingClass";
 import Authenticator from "./authenticator";
-import ClientMixin from "../util/ClientMixin";
+//import ClientMixin from "../util/ClientMixin";
 
 /**
  * Client to call the WrenchWenchService
@@ -12,12 +12,12 @@ import ClientMixin from "../util/ClientMixin";
  * https://javascript.info/mixins
   */
 export default class WrenchWenchClient extends BindingClass {
-
     constructor(props = {}) {
         super();
 
         const methodsToBind = ['clientLoaded', 'login', 'logout',
-                               'getVehicle', 'getAllVehicles', 'isLoggedIn'];
+                               'getVehicle', 'getAllVehicles', 'getIdentity',
+                               'getProfile', 'createVehicle'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();
@@ -75,12 +75,12 @@ export default class WrenchWenchClient extends BindingClass {
     }
 
     async getTokenOrThrow(unauthenticatedErrorMessage) {
-            const isLoggedIn = await this.authenticator.isUserLoggedIn();
-            if (!isLoggedIn) {
-                throw new Error(unauthenticatedErrorMessage);
-            }
+        const isLoggedIn = await this.authenticator.isUserLoggedIn();
+        if (!isLoggedIn) {
+            throw new Error(unauthenticatedErrorMessage);
+        }
 
-            return await this.authenticator.getUserToken();
+        return await this.authenticator.getUserToken();
     }
     /**
      * Gets the vehicle for the given vin.
@@ -90,7 +90,14 @@ export default class WrenchWenchClient extends BindingClass {
      */
     async getVehicle(vin, errorCallback) {
         try {
-            const response = await this.axiosClient.get(`vehicle/${vin}`);
+            const token = await this.getTokenOrThrow("Only authenticated users can view vehicles.");
+            const response = await this.axiosClient.get(`vehicles/${vin}`, {
+
+            },{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             return response.data.vehicle;
         } catch (error) {
             this.handleError(error, errorCallback)
@@ -99,12 +106,61 @@ export default class WrenchWenchClient extends BindingClass {
 
     async getAllVehicles(errorCallback){
         try{
-            const response = await this.axiosClient.get('vehicles/');
+            const response = await this.axiosClient.get(`/vehicles`);
             return response.data.vehicleList;
         } catch (error){
             this.handleError(error, errorCallback)
         }
     }
+
+    async createVehicle(vin, errorCallback) {
+    try {
+        const token = await this.getTokenOrThrow("Only authenticated users can create vehicles.");
+
+        const vehicle = {
+          vin: vin,
+        };
+
+        const response = await this.axiosClient.post(`vehicles`, vehicle, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        return response.data.vehicle;
+      } catch (error) {
+        this.handleError(error, errorCallback);
+      }
+    }
+
+//        try {
+//            const token = await this.getTokenOrThrow("Only authenticated users can create vehicles.");
+//            const response = await this.axiosClient.post(`vehicles`, {
+//                vin: vin,
+//                make: make,
+//                model: model,
+//                year: year,
+//                bodyClass: bodyClass,
+//                vehicleType: vehicleType,
+//                numOfDoors: numOfDoors,
+//                manufacturerName: manufacturerName,
+//                plantCountry: plantCountry,
+//                plantState: plantState,
+//                plantCity: plantCity,
+//                engineCylinders: engineCylinders,
+//                engineSize: engineSize,
+//                engineHP: engineHP,
+//                fuelType: fuelType
+//            }, {
+//                headers: {
+//                    Authorization: `Bearer ${token}`
+//                }
+//            });
+//            return response.data.vehicle;
+//        } catch (error) {
+//            this.handleError(error, errorCallback)
+//        }
+
 
     async getProfile(id, errorCallback){
         try {

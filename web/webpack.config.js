@@ -23,6 +23,7 @@ module.exports = {
     usedExports: true
   },
   entry: {
+    createVehicle: path.resolve(__dirname, 'src', 'pages', 'createVehicle.js'),
     viewVehicle: path.resolve(__dirname, 'src', 'pages', 'viewVehicle.js'),
     landingPage: path.resolve(__dirname, 'src', 'pages', 'landingPage.js'),
     loadGarage: path.resolve(__dirname, 'src', 'pages', 'loadGarage.js'),
