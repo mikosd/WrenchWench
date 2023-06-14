@@ -1,8 +1,6 @@
 package com.nashss.se.WrenchWench.dependency;
 
-import com.nashss.se.WrenchWench.activity.CreateVehicleActivity;
-import com.nashss.se.WrenchWench.activity.GetAllVehiclesActivity;
-import com.nashss.se.WrenchWench.activity.GetVehicleActivity;
+import com.nashss.se.WrenchWench.activity.*;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -23,4 +21,8 @@ public interface ServiceComponent {
     GetAllVehiclesActivity provideGetAllVehiclesActivity();
 
     CreateVehicleActivity provideCreateVehicleActivity();
+
+    CreateRecordActivity provideCreateRecordActivity();
+
+    DeleteRecordActivity provideDeleteRecordActivity();
 }

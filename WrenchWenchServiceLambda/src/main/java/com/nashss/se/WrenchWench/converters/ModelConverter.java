@@ -1,7 +1,9 @@
 package com.nashss.se.WrenchWench.converters;
 
+import com.nashss.se.WrenchWench.dynamodb.models.Records;
 import com.nashss.se.WrenchWench.dynamodb.models.Vehicle;
 import com.nashss.se.WrenchWench.exceptions.InvalidVinException;
+import com.nashss.se.WrenchWench.models.RecordModel;
 import com.nashss.se.WrenchWench.models.VehicleModel;
 
 import java.util.ArrayList;
@@ -39,5 +41,20 @@ public class ModelConverter {
             vehicleModelsList.add(toVehicleModel(vehicle));
         }
         return vehicleModelsList;
+    }
+
+    public RecordModel toRecordModel(Records newRecord) {
+        String vin = newRecord.getVin();
+        if(vin == null)
+            throw new InvalidVinException();
+
+        return RecordModel.builder()
+                .withVin(newRecord.getVin())
+                .withRecordId(newRecord.getRecordId())
+                .withTimestamp(newRecord.getTimestamp())
+                .withDescription(newRecord.getDescription())
+                .withPriorityLevel(newRecord.getPriorityLevel())
+                .withStatus(newRecord.getStatus())
+                .build();
     }
 }
