@@ -12,7 +12,7 @@ import javax.inject.Singleton;
  */
 @Singleton
 @Component(modules = {DaoModule.class, MetricsModule.class})
-public interface ServiceComponent {
+public  interface ServiceComponent {
 
     /**
      * Provides the relevant activity.
@@ -30,5 +30,5 @@ public interface ServiceComponent {
 
     DeleteRecordActivity provideDeleteRecordActivity();
 
-    UpdateRecordRequest provideUpdateRecordActivity();
+    UpdateRecordActivity provideUpdateRecordActivity();
 }

@@ -34,17 +34,17 @@ class ViewVehicle extends BindingClass {
             const urlParams = new URLSearchParams(window.location.search);
             const vin = urlParams.get(`vin`);
             const vehicles = await this.client.getVehicle(vin);
-            const records  = await this.client.getVehicleRecordsList(vin);
+            //const records  = await this.client.getVehicleRecordsList(vin);
 
 
             if (vehicles) {
               this.dataStore.set(`vehicles`, vehicles);
               console.log("Vehicle is stored");
 
-              if(records){
-                this.dataStore.set(`records`, records);
-                console.log("records are stored");
-              }
+//              if(records){
+//                this.dataStore.set(`records`, records);
+//                console.log("records are stored");
+//              }
             } else {
               console.log("Vehicle was not found");
             }
@@ -234,14 +234,13 @@ class ViewVehicle extends BindingClass {
         async createNewRecord(evt){
             evt.preventDefault();
 
-            var checkedValue = $("input[name='flexRadioDefault']:checked").attr('id');
-            console.log(checkedValue);
+            var checkedValue = $("input[name='flexRadioDefault']:checked").attr('value');
 
             const vin = document.getElementById("vin-td").innerText;
-            const description = document.getElementById("input-description").innerText;
-            const priority = checkedValue;
+            const description = document.getElementById("input-description").value;
+            const priorityLevel = checkedValue;
 
-            const newRecord = await this.client.createVehicleRecord(vin, description, priority);
+            const newRecord = await this.client.createVehicleRecord(vin, description, priorityLevel);
 
             if(newRecord){
                 this.dataStore.set('records', newRecord);

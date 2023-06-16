@@ -133,22 +133,25 @@ export default class WrenchWenchClient extends BindingClass {
     }
 
     async createVehicleRecord(vin, description, priorityLevel, errorCallback) {
+            console.log("vin:" + vin + " description:" + description + " priorityLevel: "+priorityLevel);
             try {
                 const token = await this.getTokenOrThrow("Only authenticated users can create records for vehicles.");
 
-                const record = {
-                  vin: vin,
-                  description: description,
-                  priorityLevel: priorityLevel
-                };
 
-                const response = await this.axiosClient.post(`records`, record, {
+
+                //console.log("Record" + record + " vin:" + record.vin + " description: " + record.description);
+
+                const response = await this.axiosClient.post(`vehicles/${vin}/records`,{
+                    vin: vin,
+                    description: description,
+                    priorityLevel: priorityLevel
+                },{
                   headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`
                   },
                 });
 
-                return response.data.record;
+                return response.data;
               } catch (error) {
                 this.handleError(error, errorCallback);
               }
@@ -157,12 +160,12 @@ export default class WrenchWenchClient extends BindingClass {
     async getVehicleRecordsList(vin, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can view vehicles records.");
-            const response = await this.axiosClient.get(`/${vin}/records`,{
+            const response = await this.axiosClient.get(`vehicles/${vin}/records`,{
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
             });
-            return response.data.recordList;
+            return response.data;
         } catch (error) {
             this.handleError(error, errorCallback)
         }

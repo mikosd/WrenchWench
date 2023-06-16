@@ -24,13 +24,17 @@ public class UpdateRecordActivity {
     public UpdateRecordResult handleRequest(UpdateRecordRequest updateRecordRequest){
         log.info("Received UpdateRecordRequest {}", updateRecordRequest);
 
-        if(VinUtils.validateVin(updateRecordRequest.getVin())){
+        Records records = recordDao.getRecord(updateRecordRequest.getVin(), updateRecordRequest.getRecordId());
 
+
+        if(VinUtils.validateVin(updateRecordRequest.getVin())){
+            String newRecordId = RecordIdGenerator.generateRecordId(updateRecordRequest.getVin());
+            records.setRecordId(newRecordId);
         }
 
-        Records records = recordDao.getRecord(updateRecordRequest.getVin(), updateRecordRequest.getRecordId());
-        String newRecordId = RecordIdGenerator.generateRecordId(updateRecordRequest.getVin());
-        records.setRecordId(newRecordId);
+
+
+
         records.setDescription(updateRecordRequest.getDescription());
         records.setStatus(updateRecordRequest.getStatus());
         records.setPriorityLevel(updateRecordRequest.getPriorityLevel());
