@@ -87,6 +87,8 @@ public class VinUtils {
             // Extract specific values from the "Results" array
             for (int i = 0; i < resultsArray.length(); i++) {
                 JSONObject result = resultsArray.getJSONObject(i);
+
+
                 int variableId = result.getInt("VariableId");
                 String value = result.optString("Value");
                 if(value.equals("null")){
