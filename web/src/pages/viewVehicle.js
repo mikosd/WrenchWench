@@ -23,28 +23,22 @@ class ViewVehicle extends BindingClass {
          * Add the header to the page and load the WrenchWenchClient.
          */
         mount() {
-            document.getElementById('submitNewRecordButton').addEventListener('click', this.createNewRecord.bind(this));
             this.header.addHeaderToPage();
             this.client = new WrenchWenchClient();
             this.getVehicleForPage();
             this.getRecordsForPage();
+            document.getElementById('submitNewRecordButton').addEventListener('click', this.createNewRecord.bind(this));
         }
 
         async getVehicleForPage() {
             const urlParams = new URLSearchParams(window.location.search);
             const vin = urlParams.get(`vin`);
             const vehicles = await this.client.getVehicle(vin);
-            //const records  = await this.client.getVehicleRecordsList(vin);
-
 
             if (vehicles) {
               this.dataStore.set(`vehicles`, vehicles);
               console.log("Vehicle is stored");
 
-//              if(records){
-//                this.dataStore.set(`records`, records);
-//                console.log("records are stored");
-//              }
             } else {
               console.log("Vehicle was not found");
             }
@@ -134,14 +128,6 @@ class ViewVehicle extends BindingClass {
                       <td>
                         ${vehicles.fuelType}
                       </td>
-
-                      <td>
-                          <p>
-                              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseRecords" aria-expanded="false" aria-controls="collapseRecords">
-                                  Vehicle Records
-                              </button>
-                          </p>
-                      </td>
                     </tr>
                 </table>
              </div>`;
@@ -162,66 +148,43 @@ class ViewVehicle extends BindingClass {
 
 
         async getRecordsForPage() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const vin = urlParams.get('vin');
-            const records = await this.client.getVehicleRecordsList(vin);
-            if (records !== null) {
-              this.dataStore.set('records', records);
+         const urlParams = new URLSearchParams(window.location.search);
+         const vin = urlParams.get('vin');
+         const records = await this.client.getVehicleRecordsList(vin);
+
+         if (records !== null) {
+           this.dataStore.set('records', records);
+           this.createRecordsTable(records);
+           console.log("Records have been stored.");
+
+           // Outputting each record ID
+           records.recordsList.forEach(record => {
+                this.createRecordsTable(record);
+           });
+         } else {
+           console.log("Records were not found");
+         }
+       }
 
 
-              console.log("Records have been stored.");
-            } else {
-              console.log("Records were not found");
-            }
-        }
 
-        createRecordsTable(records){
+        async createRecordsTable(record){
             const recordsTable = document.getElementById('records-table');
 
-                let html = `<tr>
-                              <td>
-                              <a href=viewVehicle.html/?vin=${records.vin}>${records.vin}</a>
-                              </td>
 
-                              <td>
-                                ${records.description}
-                              </td>
 
-                              <td>
-                                ${records.status}
-                              </td>
+              var description = record.description;
+              var status = record.status;
 
-                              <td>
+              // Build the HTML table row using the record properties
+              let html = `<tr><td>${record.recordId}</td><td>${record.description}</td>`+
+              `<td>${record.status}</td><td>${record.priorityLevel}</td><td>${record.timestamp}</td></tr>`;
 
-                              </td>
-                            </tr>`;
+              // Append the table row to the recordsTable element
+              recordsTable.innerHTML += html;
+            }
 
-                recordsTable.innerHTML += html;
-        }
 
-        createNewRecordTable(vin){
-                    const recordsTable = document.getElementById('create-new-record-table');
-
-                        let html = `<tr>
-                                      <td>
-                                        <a href=viewVehicle.html/?vin=${records.vin}>${records.vin}</a>
-                                      </td>
-
-                                      <td>
-                                        ${records.description}
-                                      </td>
-
-                                      <td>
-                                        ${records.status}
-                                      </td>
-
-                                      <td>
-
-                                      </td>
-                                    </tr>`;
-
-                        recordsTable.innerHTML += html;
-                }
 
         addRecordsToPage(){
             const records = this.dataStore.get(`records`);
@@ -240,10 +203,12 @@ class ViewVehicle extends BindingClass {
             const description = document.getElementById("input-description").value;
             const priorityLevel = checkedValue;
 
-            const newRecord = await this.client.createVehicleRecord(vin, description, priorityLevel);
+            const records = await this.client.createVehicleRecord(vin, description, priorityLevel);
 
-            if(newRecord){
-                this.dataStore.set('records', newRecord);
+
+            if(records){
+                this.dataStore.set('records', records);
+                this.createRecordsTable(records);
                 console.log("New Record Saved");
             } else {
                 console.log("Failed to create a new record");
