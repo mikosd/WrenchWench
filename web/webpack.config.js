@@ -25,9 +25,9 @@ module.exports = {
   entry: {
     createVehicle: path.resolve(__dirname, 'src', 'pages', 'createVehicle.js'),
     viewVehicle: path.resolve(__dirname, 'src', 'pages', 'viewVehicle.js'),
+    //viewRecords: path.resolve(__dirname, 'src', 'pages', 'viewRecords.js'),
     landingPage: path.resolve(__dirname, 'src', 'pages', 'landingPage.js'),
     loadGarage: path.resolve(__dirname, 'src', 'pages', 'loadGarage.js'),
-    //ClientMixin: path.resolve(__dirname, 'src', 'util', 'ClientMixin.js'),
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),

@@ -1,7 +1,6 @@
 import axios from "axios";
 import BindingClass from "../util/bindingClass";
 import Authenticator from "./authenticator";
-//import ClientMixin from "../util/ClientMixin";
 
 /**
  * Client to call the WrenchWenchService
@@ -15,10 +14,12 @@ export default class WrenchWenchClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'login', 'logout',
-                               'getVehicle', 'getAllVehicles', 'getIdentity',
-                               'getProfile', 'createVehicle'];
-        this.bindClassMethods(methodsToBind, this);
+        this.bindClassMethods(['clientLoaded','getVehicle', 'getAllVehicles',
+                                'getIdentity','getProfile', 'createVehicle',
+                                 'login', 'logout', 'createVehicleRecord',
+                                 'getVehicleRecordsList'],this);
+
+
 
         this.authenticator = new Authenticator();
         this.props = props;
@@ -92,11 +93,9 @@ export default class WrenchWenchClient extends BindingClass {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can view vehicles.");
             const response = await this.axiosClient.get(`vehicles/${vin}`, {
-
-            },{
                 headers: {
                     Authorization: `Bearer ${token}`
-                }
+                },
             });
             return response.data.vehicle;
         } catch (error) {
@@ -133,41 +132,51 @@ export default class WrenchWenchClient extends BindingClass {
       }
     }
 
-//        try {
-//            const token = await this.getTokenOrThrow("Only authenticated users can create vehicles.");
-//            const response = await this.axiosClient.post(`vehicles`, {
-//                vin: vin,
-//                make: make,
-//                model: model,
-//                year: year,
-//                bodyClass: bodyClass,
-//                vehicleType: vehicleType,
-//                numOfDoors: numOfDoors,
-//                manufacturerName: manufacturerName,
-//                plantCountry: plantCountry,
-//                plantState: plantState,
-//                plantCity: plantCity,
-//                engineCylinders: engineCylinders,
-//                engineSize: engineSize,
-//                engineHP: engineHP,
-//                fuelType: fuelType
-//            }, {
-//                headers: {
-//                    Authorization: `Bearer ${token}`
-//                }
-//            });
-//            return response.data.vehicle;
-//        } catch (error) {
-//            this.handleError(error, errorCallback)
-//        }
+    async createVehicleRecord(vin, description, priorityLevel, errorCallback) {
+            console.log("vin:" + vin + " description:" + description + " priorityLevel: "+priorityLevel);
+            try {
+                const token = await this.getTokenOrThrow("Only authenticated users can create records for vehicles.");
 
+
+
+                //console.log("Record" + record + " vin:" + record.vin + " description: " + record.description);
+
+                const response = await this.axiosClient.post(`vehicles/${vin}/records`,{
+                    vin: vin,
+                    description: description,
+                    priorityLevel: priorityLevel
+                },{
+                  headers: {
+                    Authorization: `Bearer ${token}`
+                  },
+                });
+
+                return response.data;
+              } catch (error) {
+                this.handleError(error, errorCallback);
+              }
+        }
+
+    async getVehicleRecordsList(vin, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can view vehicles records.");
+            const response = await this.axiosClient.get(`vehicles/${vin}/records`,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            });
+            return response.data;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
 
     async getProfile(id, errorCallback){
         try {
             console.log(id + " id");
             const token = await this.getTokenOrThrow("Only authenticated users can view a profile");
-            const response = await this.axiosClient.get('profiles/${id}', {
-                Authorization: 'Bearer ${token}',
+            const response = await this.axiosClient.get(`profiles/${id}`, {
+                Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
             });
 
