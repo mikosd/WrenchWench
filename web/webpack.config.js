@@ -6,6 +6,17 @@ const Dotenv = require('dotenv-webpack');
 const dotenvFile = process.env.API_LOCATION ? `.env.${process.env.API_LOCATION}` : '.env';
 
 module.exports = {
+   module: {
+     rules: [
+      {
+         test: /\.js$/, // Match JavaScript files
+         exclude: /node_modules/, // Exclude the node_modules directory
+         use: {
+           loader: 'babel-loader', // Use the Babel loader
+         },
+       },
+     ],
+   },
   plugins: [
     new CopyPlugin({
       patterns: [
