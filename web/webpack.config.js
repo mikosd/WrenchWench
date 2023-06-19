@@ -34,11 +34,9 @@ module.exports = {
     usedExports: true
   },
   entry: {
-    createVehicle: path.resolve(__dirname, 'src', 'pages', 'createVehicle.js'),
-    viewVehicle: path.resolve(__dirname, 'src', 'pages', 'viewVehicle.js'),
-    //viewRecords: path.resolve(__dirname, 'src', 'pages', 'viewRecords.js'),
-    landingPage: path.resolve(__dirname, 'src', 'pages', 'landingPage.js'),
-    loadGarage: path.resolve(__dirname, 'src', 'pages', 'loadGarage.js'),
+    index: path.resolve(__dirname, 'src', 'pages', 'index.js'),
+    vehicles: path.resolve(__dirname, 'src', 'pages', 'vehicles.js'),
+    records: path.resolve(__dirname, 'src', 'pages', 'records.js'),
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),
