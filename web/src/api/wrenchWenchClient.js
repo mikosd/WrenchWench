@@ -15,10 +15,10 @@ export default class WrenchWenchClient extends BindingClass {
         super();
 
         this.bindClassMethods(['clientLoaded','getVehicle', 'getAllVehicles',
-                                'getIdentity','getProfile', 'createVehicle',
-                                 'login', 'logout', 'createVehicleRecord',
-                                 'getVehicleRecordsList', 'updateRecord', 'deleteRecord',
-                                 'getRecordByRecordId' ],this);
+                               'getIdentity','getProfile', 'createVehicle',
+                               'login', 'logout', 'createVehicleRecord',
+                               'getVehicleRecordsList', 'updateRecord', 'deleteRecord',
+                               ],this);
 
         this.authenticator = new Authenticator();
         this.props = props;
@@ -102,7 +102,12 @@ export default class WrenchWenchClient extends BindingClass {
 
     async getAllVehicles(errorCallback){
         try{
-            const response = await this.axiosClient.get(`/vehicles`);
+            const token = await this.getTokenOrThrow("Only authenticated users can view vehicles.");
+            const response = await this.axiosClient.get(`/vehicles`, {
+                headers: {
+                    Authorization: `Bearer: ${token}`
+                },
+            });
             return response.data.vehicleList;
         } catch (error){
             this.handleError(error, errorCallback)
@@ -168,20 +173,6 @@ export default class WrenchWenchClient extends BindingClass {
         }
     }
 
-    async getRecordByRecordId(vin, recordId, errorCallback) {
-        try {
-            const token = await this.getTokenOrThrow("Only authenticated users can view vehicles.");
-            const response = await this.axiosClient.get(`vehicles/${vin}/records/${recordId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-            });
-            return response.data;
-        } catch (error) {
-            this.handleError(error, errorCallback)
-        }
-    }
-
     async updateRecord(vin, recordId, description, status, priorityLevel, errorCallback){
         try{
             const token = await this.getTokenOrThrow("Only authenticated users can update a record.");
@@ -194,7 +185,7 @@ export default class WrenchWenchClient extends BindingClass {
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
-                }
+                },
             });
             return response.data.record
         } catch(error){
@@ -205,15 +196,15 @@ export default class WrenchWenchClient extends BindingClass {
     async deleteRecord(vin, recordId, errorCallback){
         try{
             const token = await this.getTokenOrThrow("Only authenticated users can delete a record.");
-            const response = await this.axiosClient.delete('records', {
+            const response = await this.axiosClient.delete(`/vehicles/${vin}/records/${recordId}`, {
+                vin: vin,
+                recordId: recordId,
+            },{
                 headers: {
                     Authorization: `Bearer ${token}`
-                }, data: {
-                    vin: vin,
-                    recordId: recordId,
-                }
+               },
             });
-            return response.data.record;
+            return response.data;
         } catch (error) {
             this.handleError(error, errorCallback)
         }

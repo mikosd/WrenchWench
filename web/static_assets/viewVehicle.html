@@ -24,30 +24,20 @@
         <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"></path>
     </symbol>
 </svg>
-<header id="header">
+<header>
     <div class="px-3 py-2 bg-dark text-white">
         <div class="container-lg">
-            <div class="row">
-            <div class="col align-self-start">
-                One of three columns
-            </div>
-            <div class="col align-self-center">
-                One of three columns
-            </div><div class="col align-self-end">
-                    One of three columns
-            </div>
-            <div class="text-end align-items-right justify-content-right">
-                <button type="button" id="login" class="btn btn-light text-dark me-2">Login</button>
-                <button type="button" class="btn btn-primary">Sign-up</button>
+            <div class="text-end align-items-right justify-content-right" id="loginDiv">
+
             </div>
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
                     <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
                 </a>
 
-                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small" id="navlist">
                     <li>
-                        <a href="index.html" class="nav-link text-secondary">
+                        <a href="index.html" class="nav-link text-white">
                             <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"></use></svg>
                             Home
                         </a>
@@ -74,7 +64,6 @@
 </header>
 
 <div class="title-div container-xl">
-    <a href="#" class="button" id="createButton">Enter a VIN</a>
     <h2>Vehicles Table</h2>
 
 </div>
@@ -118,16 +107,18 @@
             <div class="collapse" id="collapseRecords">
                 <div class="card card-body">
 
-                    <table class="table table-responsive" id="records-table">
+                    <table class="table table-striped" id="records-table">
                         <thead class="table-dark">
-                        <tr>
-                            <th>Record ID</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>Priority Level</th>
-                            <th>Last Updated</th>
-                        </tr>
-                        </thead>
+                            <tbody class="table-striped">
+                                <tr>
+                                    <th>Record ID</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Priority Level</th>
+                                    <th>Last Updated</th>
+                                    <th> </th>
+                                </tr>
+                            </tbody>
                     </table>
                 </div>
             </div>
@@ -139,16 +130,21 @@
 
 <div class="offcanvas offcanvas-bottom" id="offcanvas-update-record">
     <div class="offcanvas-header">
-        <h1 class="offcanvas-title">Heading</h1>
+        <h1 class="offcanvas-title">Update Record</h1>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
-        <textarea class="form-control" id="descriptionField" required></textarea>
+        <label for="recordIdField">RecordID:</label>
+        <input disabled id="recordIdField"/>
+        <label for="descriptionField">Description:</label>
+        <textarea id="descriptionField"></textarea>
+        <label for="statusField">Status:</label>
+        <input type=text id="statusField"/>
+        <label for="priorityField">Priority:</label>
+        <input type=text id="priorityField"/>
 
-        <p>Some text lorem ipsum.</p>
-        <p>Some text lorem ipsum.</p>
-        <p>Some text lorem ipsum.</p>
-        <button class="btn btn-secondary" type="button">A Button</button>
+
+        <button class="btn btn-secondary" id="submitUpdateButton" type="button">Submit</button>
     </div>
 </div>
 
@@ -162,7 +158,7 @@
                 <h4>New Maintenance Record</h4>
 
 
-                <div id="recordsContainer3" class="container">
+                <div id="createRecordsContainer" class="container">
 
                     <div class="input-group">
                         <span class="input-group-text">Enter Description</span>

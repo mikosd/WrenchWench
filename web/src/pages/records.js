@@ -10,19 +10,18 @@ import DataStore from '../util/DataStore';
 class Records extends BindingClass {
   constructor() {
     super();
-    this.bindClassMethods(['mount', 'getRecordsForPage', 'createNewRecord',
-                           'updateRecordsTable', 'getRecordById'], this);
+    this.bindClassMethods(['mount', 'getRecordsForPage', 'createNewRecord', 'deleteRecord',
+                           'updateRecordsTable', 'getRecordById', 'updateRecordById'], this);
     this.dataStore = new DataStore();
     this.header = new Header(this.dataStore);
     this.dataStore.addChangeListener(this.updateRecordsTable);
-    this.update
   }
 
   mount() {
-    this.header.addHeaderToPage();
     this.client = new WrenchWenchClient();
     this.getRecordsForPage();
     document.getElementById('submitNewRecordButton').addEventListener('click', this.createNewRecord);
+    document.getElementById('submitUpdateButton').addEventListener('click', this.updateRecordById);
   }
 
   async getRecordsForPage() {
@@ -46,40 +45,60 @@ class Records extends BindingClass {
 
     const recordsTable = document.getElementById('records-table');
 
-    records.recordsList.forEach((record) => {
-      const recordId = record.recordId;
-      const description = record.description;
-      const status = record.status;
-      const priorityLevel = record.priorityLevel;
-      const timestamp = record.timestamp;
-      const isNewRecord = record.isNewRecord
+    const handleClick = (event) => {
+        event.preventDefault();
+        const target = event.target.closest('a');
+        if(target && target.id.startsWith('recordLink-')){
+            const recordId = target.id.split('-')[1];
+            this.updateRecordById(recordId);
+        }
+    };
 
+    recordsTable.addEventListener('click', (event) => {
+        const target = event.target;
+        if (target.tagName === 'A' && target.id.startsWith('recordLink-')) {
+          event.preventDefault();
+          const recordId = target.id.split('-')[1];
+          this.updateRecordById(recordId);
+        }
+      });
+
+    records.recordsList.forEach((record) => {
+      let recordId = record.recordId;
+      let description = record.description;
+      let status = record.status;
+      let priorityLevel = record.priorityLevel;
+      let timestamp = record.timestamp;
+
+      const isNewRecord = record.isNewRecord
       const recordModel = record.recordModel;
-      console.log('Record in UpdateRecordTable: ', record); // Debugging statement
 
       let html = `<tr>`
 
       if(isNewRecord){
-        html += `<td><a id="recordLink-${recordId}" href="#offcanvas-update-record" data-bs-toggle="offcanvas" data-toggle="collapse">`+
-        `${recordModel.recordId}</a></td><td>${recordModel.description}</td>` +
-        `<td>${recordModel.status}</td><td>${recordModel.priorityLevel}</td><td>${recordModel.timestamp}</td>`;
-
-      } else {
-        html += `<td><a id="recordLink-${recordId}" href="#offcanvas-update-record" data-bs-toggle="offcanvas" data-toggle="collapse">${recordId}</td><td>${description}</td>` +
-        `<td>${status}</td><td>${priorityLevel}</td><td>${timestamp}</td>`;
+        recordId = recordModel.recordId;
+        description = recordModel.description;
+        status = recordModel.status;
+        priorityLevel = recordModel.priorityLevel;
+        timestamp = recordModel.timestamp;
       }
-      html += `</tr>`;
+      const row = document.createElement('tr');
 
-      recordsTable.innerHTML += html;
+      row.innerHTML = `<td><a id="recordLink-${recordId}" href="#offcanvas-update-record" data-bs-toggle="offcanvas" data-toggle="collapse">${recordId}</a></td>
+      <td id="description-${recordId}">${description}</td>
+      <td id="status-${recordId}">${status}</td>
+      <td id="priority-${recordId}">${priorityLevel}</td>
+      <td id="timestamp-${recordId}">${timestamp}</td>
+      <td><button id="deleteButton-${recordId}" data-recordId="${recordId}">Delete</button></td>
+      </tr>`;
 
-      const recordLink = document.getElementById(`recordLink-${recordId}`);
-      recordLink.addEventListener('click', (event) => {
-        event.preventDefault();
+      recordsTable.appendChild(row);
 
-        console.log("eventlistener: ", recordId);
-        this.getRecordById(recordId);
-      });
+      const deleteButton = row.querySelector(`#deleteButton-${recordId}`);
+      deleteButton.addEventListener('click', this.deleteRecord.bind(this));
     });
+
+    recordsTable.addEventListener('click', handleClick);
   }
 
   async createNewRecord(evt) {
@@ -109,60 +128,58 @@ class Records extends BindingClass {
     }
   }
 
-   async updatedRecord(evt) {
-      const urlParams = new URLSearchParams(window.location.search);
-      const vin = urlParams.get('vin');
-      evt.preventDefault();
-
-      const checkedValue = $("input[name='flexRadioDefault']:checked").attr('value');
-
-      const description = document.getElementById('input-description').value;
-      const priorityLevel = checkedValue;
-
-      const record = await this.client.createVehicleRecord(vin, description, priorityLevel);
-
-      if (record) {
-          record.isNewRecord = true;
-
-          this.dataStore.update((state) => {
-            const updatedRecords = { ...state.records};
-            updatedRecords.recordsList.push(record);
-            return { ...state, records: updatedRecords};
-          });
-          console.log('Record in CreateNewRecord: ', record); // Debugging statement
-          console.log('New Record Saved');
-      } else {
-          console.log('Failed to create a new record');
-      }
-   }
-
-   async getRecordById(recordId){
+    async getRecordById(recordId){
+        console.log("getRecordById is called");
         const urlParams = new URLSearchParams(window.location.search);
         const vin = urlParams.get('vin');
 
-        const record = await this.client.getRecordByRecordId(vin, recordId);
 
-     if(record){
-        const description = record.description;
-        const status = recordModel.status;
-        const priorityLevel = recordModel.priorityLevel;
-        const timestamp = recordModel.timestamp;
+        const description = document.getElementById(`description-${recordId}`).textContent;
+        const status = document.getElementById(`status-${recordId}`).textContent;
+        const priorityLevel = document.getElementById(`priority-${recordId}`).textContent;
 
+        document.getElementById("recordIdField").value = recordId;
         document.getElementById("descriptionField").value = description;
-
-        console.log("getRecordById description:", description);
-     } else {
-        console.log("Record not found for ID: ", recordId);
-     }
+        document.getElementById("statusField").value = status;
+        document.getElementById("priorityField").value = priorityLevel;
    }
+
+
+    async updateRecordById(){
+        console.log("updateRecord is called");
+        const urlParams = new URLSearchParams(window.location.search);
+        const vin = urlParams.get('vin');
+        const recordId = document.getElementById("recordIdField").textContent;
+        const description = document.getElementById("descriptionField").textContent;
+        const status = document.getElementById("statusField").textContent;
+        const priorityLevel = document.getElementById("priorityField").textContent;
+
+        const record = await this.client.updateRecord(vin, recordId, description, status, priorityLevel);
+
+        this.dataStore.set('record', record);
+        alert("Record has been updated");
+    }
+
+    async deleteRecord(event){
+        if(confirm("Delete this record?")){
+            event.preventDefault();
+            const urlParams = new URLSearchParams(window.location.search);
+            const vin = urlParams.get('vin');
+            const recordId = event.currentTarget.getAttribute('data-recordId');
+            console.log("Record to be deleted: " + recordId);
+            await this.client.deleteRecord(vin, recordId);
+            alert(recordId + " has been deleted.");
+            location.reload();
+        }
+    }
 }
 
 const main = async () => {
-const records = new Records();
-records.mount();
-$('#myCollapsible').collapse({
-  toggle: false,
-});
+    const records = new Records();
+    records.mount();
+    $('#myCollapsible').collapse({
+    toggle: false,
+    });
 };
 
 window.addEventListener('DOMContentLoaded', main);
