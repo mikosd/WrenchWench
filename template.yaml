@@ -121,7 +121,7 @@ Resources:
         Comment: 'Serverless frontend website'
 
   CloudfrontDistribution:
-    Type: "AWS::CloudFront::Distribution"
+    Type: AWS::CloudFront::Distribution
     Condition: DeployCloudFront
     Properties:
       DistributionConfig:

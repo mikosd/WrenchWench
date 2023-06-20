@@ -26,15 +26,6 @@ public class UpdateRecordActivity {
 
         Records records = recordDao.getRecord(updateRecordRequest.getVin(), updateRecordRequest.getRecordId());
 
-
-        if(VinUtils.validateVin(updateRecordRequest.getVin())){
-            String newRecordId = RecordIdGenerator.generateRecordId(updateRecordRequest.getVin());
-            records.setRecordId(newRecordId);
-        }
-
-
-
-
         records.setDescription(updateRecordRequest.getDescription());
         records.setStatus(updateRecordRequest.getStatus());
         records.setPriorityLevel(updateRecordRequest.getPriorityLevel());

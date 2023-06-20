@@ -17,7 +17,7 @@ export default class WrenchWenchClient extends BindingClass {
         this.bindClassMethods(['clientLoaded','getVehicle', 'getAllVehicles',
                                'getIdentity','getProfile', 'createVehicle',
                                'login', 'logout', 'createVehicleRecord',
-                               'getVehicleRecordsList', 'updateRecord', 'deleteRecord',
+                               'getVehicleRecordsList', 'updateRecord', 'deleteRecord'
                                ],this);
 
         this.authenticator = new Authenticator();
@@ -52,7 +52,7 @@ export default class WrenchWenchClient extends BindingClass {
 
             return await this.authenticator.getCurrentUserInfo();
         } catch (error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
         }
     }
 
@@ -96,7 +96,7 @@ export default class WrenchWenchClient extends BindingClass {
             });
             return response.data.vehicle;
         } catch (error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
         }
     }
 
@@ -110,7 +110,7 @@ export default class WrenchWenchClient extends BindingClass {
             });
             return response.data.vehicleList;
         } catch (error){
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
         }
     }
 
@@ -169,14 +169,14 @@ export default class WrenchWenchClient extends BindingClass {
             });
             return response.data;
         } catch (error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
         }
     }
 
     async updateRecord(vin, recordId, description, status, priorityLevel, errorCallback){
         try{
             const token = await this.getTokenOrThrow("Only authenticated users can update a record.");
-            const response = await this.axiosClient.put(`/vehicles/${vin}/records/${recordId}`, {
+            const response = await this.axiosClient.put(`vehicles/${vin}/records/${recordId}`, {
                 vin: vin,
                 recordId: recordId,
                 description: description,
@@ -187,26 +187,26 @@ export default class WrenchWenchClient extends BindingClass {
                     Authorization: `Bearer ${token}`
                 },
             });
-            return response.data.record
+            return response.data.record;
         } catch(error){
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
         }
     }
 
     async deleteRecord(vin, recordId, errorCallback){
         try{
             const token = await this.getTokenOrThrow("Only authenticated users can delete a record.");
-            const response = await this.axiosClient.delete(`/vehicles/${vin}/records/${recordId}`, {
-                vin: vin,
-                recordId: recordId,
-            },{
+            console.log("Token: "+ token);
+            const response = await this.axiosClient.delete(`vehicles/${vin}/records/${recordId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
-               },
-            });
+            }});
+            console.log("Response: ", response);
+
             return response.data;
         } catch (error) {
-            this.handleError(error, errorCallback)
+            console.log(error);
+            this.handleError(error, errorCallback);
         }
     }
 
@@ -221,7 +221,7 @@ export default class WrenchWenchClient extends BindingClass {
 
             return response.data;
         } catch(error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
         }
     }
 
@@ -235,7 +235,7 @@ export default class WrenchWenchClient extends BindingClass {
 
         const errorFromApi = error?.response?.data?.error_message;
         if (errorFromApi) {
-            console.error(errorFromApi)
+            console.error(errorFromApi);
             error.message = errorFromApi;
         }
 

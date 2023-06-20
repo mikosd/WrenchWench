@@ -25,6 +25,7 @@ public class DeleteRecordActivity {
         log.info("Received request to delete record with request {}", request);
 
         Records record = new Records();
+        record.setVin(request.getVin());
         record.setRecordId(request.getRecordId());
 
         recordDao.deleteRecord(record);

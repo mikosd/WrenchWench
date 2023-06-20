@@ -11,19 +11,19 @@ public class GetVehicleRecordsLambda
         extends LambdaActivityRunner<GetVehicleRecordsRequest, GetVehicleRecordsResult>
         implements RequestHandler<AuthenticatedLambdaRequest<GetVehicleRecordsRequest>, LambdaResponse> {
 
-            private final Logger log = LogManager.getLogger();
+    private final Logger log = LogManager.getLogger();
 
-            @Override
-            public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetVehicleRecordsRequest> input, Context context) {
+    @Override
+    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetVehicleRecordsRequest> input, Context context) {
 
-                log.info("handleRequest");
-                return super.runActivity(
-                    () -> input.fromPath(path ->
-                GetVehicleRecordsRequest.builder()
-                .withVin(path.get("vin"))
-                .build()),
-                        (request, serviceComponent) ->
-                            serviceComponent.provideGetVehicleRecordsActivity().handleRequest(request)
-                );
-            }
+        log.info("handleRequest");
+        return super.runActivity(
+            () -> input.fromPath(path ->
+        GetVehicleRecordsRequest.builder()
+        .withVin(path.get("vin"))
+        .build()),
+                (request, serviceComponent) ->
+                    serviceComponent.provideGetVehicleRecordsActivity().handleRequest(request)
+        );
+    }
 }

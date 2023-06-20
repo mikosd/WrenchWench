@@ -50,7 +50,7 @@ class Records extends BindingClass {
         const target = event.target.closest('a');
         if(target && target.id.startsWith('recordLink-')){
             const recordId = target.id.split('-')[1];
-            this.updateRecordById(recordId);
+            this.getRecordById(recordId);
         }
     };
 
@@ -59,7 +59,7 @@ class Records extends BindingClass {
         if (target.tagName === 'A' && target.id.startsWith('recordLink-')) {
           event.preventDefault();
           const recordId = target.id.split('-')[1];
-          this.updateRecordById(recordId);
+          this.getRecordById(recordId);
         }
       });
 
@@ -101,10 +101,10 @@ class Records extends BindingClass {
     recordsTable.addEventListener('click', handleClick);
   }
 
-  async createNewRecord(evt) {
+  async createNewRecord(event) {
     const urlParams = new URLSearchParams(window.location.search);
     const vin = urlParams.get('vin');
-    evt.preventDefault();
+    event.preventDefault();
 
     const checkedValue = $("input[name='flexRadioDefault']:checked").attr('value');
 
@@ -149,15 +149,18 @@ class Records extends BindingClass {
         console.log("updateRecord is called");
         const urlParams = new URLSearchParams(window.location.search);
         const vin = urlParams.get('vin');
-        const recordId = document.getElementById("recordIdField").textContent;
-        const description = document.getElementById("descriptionField").textContent;
-        const status = document.getElementById("statusField").textContent;
-        const priorityLevel = document.getElementById("priorityField").textContent;
+        const recordId = document.getElementById("recordIdField").value;
+        const description = document.getElementById("descriptionField").value;
+        const status = document.getElementById("statusField").value;
+        const priorityLevel = document.getElementById("priorityField").value;
+
+        console.log("VIN: ",vin);
+        console.log("recordId: ",recordId);
+        console.log("description: ",description);
+        console.log("status: ",status);
+        console.log("priorityLevel: ",priorityLevel);
 
         const record = await this.client.updateRecord(vin, recordId, description, status, priorityLevel);
-
-        this.dataStore.set('record', record);
-        alert("Record has been updated");
     }
 
     async deleteRecord(event){
@@ -166,7 +169,7 @@ class Records extends BindingClass {
             const urlParams = new URLSearchParams(window.location.search);
             const vin = urlParams.get('vin');
             const recordId = event.currentTarget.getAttribute('data-recordId');
-            console.log("Record to be deleted: " + recordId);
+            console.log("Record to be deleted: " + recordId + " with VIN: "+ vin);
             await this.client.deleteRecord(vin, recordId);
             alert(recordId + " has been deleted.");
             location.reload();

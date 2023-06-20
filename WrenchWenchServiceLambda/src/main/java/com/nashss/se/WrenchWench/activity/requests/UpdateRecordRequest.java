@@ -1,8 +1,10 @@
 package com.nashss.se.WrenchWench.activity.requests;
 
 import com.amazonaws.services.dynamodbv2.xspec.S;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+@JsonDeserialize(builder = UpdateRecordRequest.Builder.class)
 public class UpdateRecordRequest {
     private final String vin;
     private final String recordId;
@@ -40,7 +42,7 @@ public class UpdateRecordRequest {
 
     @Override
     public String toString() {
-        return "UpdateRecordRequest{" +
+        return "UpdateRecordRequest{" + '\''+
                 "vin='" + vin  + '\'' +
                 ", recordId='" + recordId + '\'' +
                 ", description='" + description + '\'' +
