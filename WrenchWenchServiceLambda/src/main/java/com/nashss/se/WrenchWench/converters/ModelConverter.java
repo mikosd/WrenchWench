@@ -3,6 +3,7 @@ package com.nashss.se.WrenchWench.converters;
 import com.nashss.se.WrenchWench.dynamodb.models.Records;
 import com.nashss.se.WrenchWench.dynamodb.models.Vehicle;
 import com.nashss.se.WrenchWench.exceptions.InvalidVinException;
+import com.nashss.se.WrenchWench.exceptions.VehicleNotFoundException;
 import com.nashss.se.WrenchWench.models.RecordModel;
 import com.nashss.se.WrenchWench.models.VehicleModel;
 

@@ -1,4 +1,4 @@
-package com.nashss.se.WrenchWenchService.activity;
+package java.com.nashss.se.WrenchWenchService.activity;
 
 import com.nashss.se.WrenchWench.activity.GetAllVehiclesActivity;
 import com.nashss.se.WrenchWench.activity.requests.GetAllVehiclesRequest;
@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
+
 
 public class GetAllVehiclesTest {
 

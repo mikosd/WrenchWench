@@ -2,6 +2,7 @@ package com.nashss.se.WrenchWench.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.nashss.se.WrenchWench.exceptions.VehicleNotFoundException;
 import com.nashss.se.WrenchWench.metrics.MetricsPublisher;
 import com.nashss.se.WrenchWench.dynamodb.models.Vehicle;
 import com.nashss.se.WrenchWench.metrics.MetricsConstants;
@@ -32,11 +33,10 @@ public class VehicleDao {
     public Vehicle getVehicle(String vin){
         Vehicle vehicle = this.dynamoDBMapper.load(Vehicle.class, vin);
 
-        if(vehicle == null){
+        if(vehicle == null) {
             metricsPublisher.addCount(MetricsConstants.GETVEHICLE_VEHICLENOTFOUND_COUNT, 1);
-            //throw new VehicleNotFoundException("Could not find a vehicle with VIN " + vin);
+            throw new VehicleNotFoundException("Could not find a vehicle with VIN " + vin);
         }
-        metricsPublisher.addCount(MetricsConstants.GETVEHICLE_VEHICLENOTFOUND_COUNT, 0);
         return vehicle;
     }
 
