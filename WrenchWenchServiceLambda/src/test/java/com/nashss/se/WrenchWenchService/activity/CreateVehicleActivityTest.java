@@ -28,7 +28,7 @@ public class CreateVehicleActivityTest {
     }
 
     @Test
-    public void handleRequest_withVin_createsAndSavesVehicle(){
+    public void handleRequest_withVin_createsAndSavesVehicle() {
         //GIVEN
         String testVin = "JM1NA3518P1419935";
         String expectedMake = "MAZDA";
@@ -76,7 +76,7 @@ public class CreateVehicleActivityTest {
     }
 
     @Test
-    public void handleRequest_invalidVin_throwsException(){
+    public void handleRequest_invalidVin_throwsException() {
         //GIVEN
         CreateVehicleRequest request = CreateVehicleRequest.builder()
                 .withVin("JM1NA3517P1419935")   //same as test VIN above, checksum was changed by one

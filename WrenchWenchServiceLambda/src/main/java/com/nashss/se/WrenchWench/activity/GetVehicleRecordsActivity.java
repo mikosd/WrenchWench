@@ -18,22 +18,22 @@ public class GetVehicleRecordsActivity {
 
     private final Logger log = LogManager.getLogger();
     private final RecordDao recordDao;
+    private final ModelConverter modelConverter;
 
     @Inject
-    public GetVehicleRecordsActivity(RecordDao recordDao){
+    public GetVehicleRecordsActivity(RecordDao recordDao, ModelConverter modelConverter){
         this.recordDao = recordDao;
+        this.modelConverter = modelConverter;
     }
 
     public GetVehicleRecordsResult handleRequest(final GetVehicleRecordsRequest getVehicleRecordsRequest){
         log.info("Received GetVehicleRecordsRequest {}", getVehicleRecordsRequest);
 
-
-
         List<Records> recordsForVinList = recordDao.getAllRecordsForVin(getVehicleRecordsRequest.getVin());
         List<RecordModel> recordModelsList = new ArrayList<>();
 
         for (Records record: recordsForVinList) {
-            recordModelsList.add(new ModelConverter().toRecordModel(record));
+            recordModelsList.add(modelConverter.toRecordModel(record));
         }
 
         return GetVehicleRecordsResult.builder()

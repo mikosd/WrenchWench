@@ -1,12 +1,11 @@
 package com.nashss.se.WrenchWench.dynamodb.models;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 @DynamoDBTable(tableName = "records")
 public class Records {
+    public static final String TIMESTAMP_INDEX = "RecordsByTimestampIndex";
+
     private String vin;
     private String recordId;
     private String timestamp;
@@ -30,7 +29,7 @@ public class Records {
         this.recordId = recordId;
     }
 
-    @DynamoDBAttribute(attributeName = "timestamp")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = TIMESTAMP_INDEX, attributeName = "timestamp")
     public String getTimestamp() {
         return timestamp;
     }

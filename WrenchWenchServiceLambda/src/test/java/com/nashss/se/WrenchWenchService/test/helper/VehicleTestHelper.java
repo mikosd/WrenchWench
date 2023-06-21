@@ -18,7 +18,7 @@ public class VehicleTestHelper {
         vehicle.setNumOfDoors("2");
         vehicle.setManufacturerName("MAZDA MOTOR CORPORATION");
         vehicle.setPlantCountry("JAPAN");
-        vehicle.setPlantState(null);
+        vehicle.setPlantState("state");
         vehicle.setPlantCity("HIROSHIMA");
         vehicle.setEngineCylinders("4");
         vehicle.setEngineSize("1.6L");

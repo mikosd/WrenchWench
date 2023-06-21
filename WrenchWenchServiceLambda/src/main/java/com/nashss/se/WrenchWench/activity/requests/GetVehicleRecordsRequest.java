@@ -25,7 +25,7 @@ public class GetVehicleRecordsRequest {
                 '}';
     }
 
-    //CHECKSTYLE:OFF:Buildeer
+    //CHECKSTYLE:OFF:Builder
     public static Builder builder(){
         return new Builder();
     }

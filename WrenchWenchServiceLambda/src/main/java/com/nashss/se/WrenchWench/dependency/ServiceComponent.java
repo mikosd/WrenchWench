@@ -1,8 +1,6 @@
 package com.nashss.se.WrenchWench.dependency;
 
-import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.nashss.se.WrenchWench.activity.*;
-import com.nashss.se.WrenchWench.activity.requests.UpdateRecordRequest;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -12,7 +10,7 @@ import javax.inject.Singleton;
  */
 @Singleton
 @Component(modules = {DaoModule.class, MetricsModule.class})
-public  interface ServiceComponent {
+public interface ServiceComponent {
 
     /**
      * Provides the relevant activity.

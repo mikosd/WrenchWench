@@ -5,10 +5,10 @@ import com.nashss.se.WrenchWench.dynamodb.VehicleDao;
 import com.nashss.se.WrenchWench.dynamodb.models.Vehicle;
 import com.nashss.se.WrenchWench.metrics.MetricsPublisher;
 import com.nashss.se.WrenchWenchService.test.helper.VehicleTestHelper;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.initMocks;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 public class VehicleDaoTest {
@@ -28,16 +27,16 @@ public class VehicleDaoTest {
 
     private MetricsPublisher metricsPublisher;
 
-    public VehicleDaoTest() {}
+    public VehicleDaoTest() { }
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         openMocks(this);
         vehicleDao = new VehicleDao(dynamoDBMapper, metricsPublisher);
     }
 
     @Test
-    public void getVehicle_withVIN_callsMapperWithKey(){
+    public void getVehicle_withVIN_callsMapperWithKey() {
         //GIVEN
         String vin = "JM1NB353X40403333";
         when(dynamoDBMapper.load(Vehicle.class, vin)).thenReturn(new Vehicle());
@@ -51,7 +50,7 @@ public class VehicleDaoTest {
     }
 
     @Test
-    public void getVehicle_withVIN_callsMapperWithVehicle(){
+    public void getVehicle_withVIN_callsMapperWithVehicle() {
         //GIVEN
         Vehicle vehicle = new Vehicle();
 
@@ -64,7 +63,7 @@ public class VehicleDaoTest {
     }
 
     @Test
-    public void getAllVehicles_callsMapper(){
+    public void getAllVehicles_callsMapper() {
         //GIVEN
         List<Vehicle> vehicleList = new ArrayList<>();
         vehicleList.add(VehicleTestHelper.generateVehicle());

@@ -1,7 +1,5 @@
 package com.nashss.se.WrenchWench.activity.results;
 
-import com.google.gson.Gson;
-import com.nashss.se.WrenchWench.dynamodb.models.Records;
 import com.nashss.se.WrenchWench.models.RecordModel;
 
 public class DeleteRecordResult {
@@ -9,6 +7,10 @@ public class DeleteRecordResult {
 
     private DeleteRecordResult(RecordModel record){
         this.record = record;
+    }
+
+    public RecordModel getRecord(){
+        return record;
     }
 
     @Override
