@@ -121,7 +121,7 @@ Resources:
         Comment: 'Serverless frontend website'
 
   CloudfrontDistribution:
-    Type: "AWS::CloudFront::Distribution"
+    Type: AWS::CloudFront::Distribution
     Condition: DeployCloudFront
     Properties:
       DistributionConfig:
@@ -320,6 +320,27 @@ Resources:
           Properties:
             Path: /vehicles/{vin}/records
             Method: post
+
+  UpdateRecordLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: WrenchWenchServiceLambda
+      Handler: com.nashss.se.WrenchWench.lambda.UpdateRecordLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        WrenchWenchService:
+          Type: Api
+          Properties:
+            Path: /vehicles/{vin}/records/{recordId}
+            Method: put
+
 
   DeleteRecordLambda:
     Type: AWS::Serverless::Function

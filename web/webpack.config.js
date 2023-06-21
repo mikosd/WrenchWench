@@ -6,6 +6,17 @@ const Dotenv = require('dotenv-webpack');
 const dotenvFile = process.env.API_LOCATION ? `.env.${process.env.API_LOCATION}` : '.env';
 
 module.exports = {
+   module: {
+     rules: [
+      {
+         test: /\.js$/, // Match JavaScript files
+         exclude: /node_modules/, // Exclude the node_modules directory
+         use: {
+           loader: 'babel-loader', // Use the Babel loader
+         },
+       },
+     ],
+   },
   plugins: [
     new CopyPlugin({
       patterns: [
@@ -23,11 +34,9 @@ module.exports = {
     usedExports: true
   },
   entry: {
-    createVehicle: path.resolve(__dirname, 'src', 'pages', 'createVehicle.js'),
-    viewVehicle: path.resolve(__dirname, 'src', 'pages', 'viewVehicle.js'),
-    //viewRecords: path.resolve(__dirname, 'src', 'pages', 'viewRecords.js'),
-    landingPage: path.resolve(__dirname, 'src', 'pages', 'landingPage.js'),
-    loadGarage: path.resolve(__dirname, 'src', 'pages', 'loadGarage.js'),
+    index: path.resolve(__dirname, 'src', 'pages', 'index.js'),
+    vehicles: path.resolve(__dirname, 'src', 'pages', 'vehicles.js'),
+    records: path.resolve(__dirname, 'src', 'pages', 'records.js'),
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),

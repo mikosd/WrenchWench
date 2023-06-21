@@ -9,8 +9,7 @@ export default class Header extends BindingClass {
         super();
 
         const methodsToBind = [
-            'addHeaderToPage', 'createSiteTitle', 'createUserInfoForHeader',
-            'createLoginButton', 'createLogoutButton'
+            'addHeaderToPage', 'createUserInfoForHeader', 'createLoginButton', 'createLogoutButton'
         ];
         this.bindClassMethods(methodsToBind, this);
 
@@ -22,30 +21,12 @@ export default class Header extends BindingClass {
      */
     async addHeaderToPage() {
         const currentUser = await this.client.getIdentity();
-
-        const siteTitle = this.createSiteTitle();
         const userInfo = this.createUserInfoForHeader(currentUser);
 
-        const header = document.getElementById('header');
-        header.appendChild(siteTitle);
-        header.appendChild(userInfo);
-    }
-
-    createSiteTitle() {
-        const homeButton = document.createElement('a');
-        homeButton.classList.add('header_home');
-        homeButton.href = 'index.html';
-        homeButton.innerText = 'Wrench Wench';
-
-        const siteTitle = document.createElement('div');
-        siteTitle.classList.add('site-title');
-        siteTitle.appendChild(homeButton);
-
-        return siteTitle;
     }
 
     createUserInfoForHeader(currentUser) {
-        const userInfo = document.createElement('div');
+        const userInfo = document.getElementById('loginDiv');
         userInfo.classList.add('user');
 
         const childContent = currentUser
@@ -66,8 +47,8 @@ export default class Header extends BindingClass {
     }
 
     createButton(text, clickHandler) {
-        const button = document.createElement('a');
-        button.classList.add('button');
+        const button = document.createElement('button');
+        button.classList.add('btn');
         button.href = '#';
         button.innerText = text;
 

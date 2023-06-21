@@ -61,4 +61,14 @@ export default class DataStore extends BindingClass {
         this.listeners.push(listener);
     }
 
+    /**
+     * Update the state by applying a transformation function to the current state. The transformation function receives
+     * the current state as an argument and should return the updated state.
+     * @param transformation A function that takes the current state and returns the updated state.
+     */
+    update(transformation) {
+        this.state = transformation(this.state);
+        this.listeners.forEach(listener => listener());
+    }
+
 }

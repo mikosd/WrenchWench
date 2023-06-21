@@ -15,11 +15,10 @@ export default class WrenchWenchClient extends BindingClass {
         super();
 
         this.bindClassMethods(['clientLoaded','getVehicle', 'getAllVehicles',
-                                'getIdentity','getProfile', 'createVehicle',
-                                 'login', 'logout', 'createVehicleRecord',
-                                 'getVehicleRecordsList'],this);
-
-
+                               'getIdentity','getProfile', 'createVehicle',
+                               'login', 'logout', 'createVehicleRecord',
+                               'getVehicleRecordsList', 'updateRecord', 'deleteRecord'
+                               ],this);
 
         this.authenticator = new Authenticator();
         this.props = props;
@@ -38,8 +37,6 @@ export default class WrenchWenchClient extends BindingClass {
         }
     }
 
-
-
     /**
      * Get the identity of the current user
      * @param errorCallback (Optional) A function to execute if the call fails.
@@ -55,7 +52,7 @@ export default class WrenchWenchClient extends BindingClass {
 
             return await this.authenticator.getCurrentUserInfo();
         } catch (error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
         }
     }
 
@@ -92,23 +89,28 @@ export default class WrenchWenchClient extends BindingClass {
     async getVehicle(vin, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can view vehicles.");
-            const response = await this.axiosClient.get(`vehicles/${vin}`, {
+            const response = await this.axiosClient.get(`/vehicles/${vin}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
             });
             return response.data.vehicle;
         } catch (error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
         }
     }
 
     async getAllVehicles(errorCallback){
         try{
-            const response = await this.axiosClient.get(`/vehicles`);
+            const token = await this.getTokenOrThrow("Only authenticated users can view vehicles.");
+            const response = await this.axiosClient.get(`/vehicles`, {
+                headers: {
+                    Authorization: `Bearer: ${token}`
+                },
+            });
             return response.data.vehicleList;
         } catch (error){
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
         }
     }
 
@@ -167,7 +169,44 @@ export default class WrenchWenchClient extends BindingClass {
             });
             return response.data;
         } catch (error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
+        }
+    }
+
+    async updateRecord(vin, recordId, description, status, priorityLevel, errorCallback){
+        try{
+            const token = await this.getTokenOrThrow("Only authenticated users can update a record.");
+            const response = await this.axiosClient.put(`vehicles/${vin}/records/${recordId}`, {
+                vin: vin,
+                recordId: recordId,
+                description: description,
+                status: status,
+                priorityLevel: priorityLevel,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            });
+            return response.data.record;
+        } catch(error){
+            this.handleError(error, errorCallback);
+        }
+    }
+
+    async deleteRecord(vin, recordId, errorCallback){
+        try{
+            const token = await this.getTokenOrThrow("Only authenticated users can delete a record.");
+            console.log("Token: "+ token);
+            const response = await this.axiosClient.delete(`vehicles/${vin}/records/${recordId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+            }});
+            console.log("Response: ", response);
+
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            this.handleError(error, errorCallback);
         }
     }
 
@@ -182,7 +221,7 @@ export default class WrenchWenchClient extends BindingClass {
 
             return response.data;
         } catch(error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
         }
     }
 
@@ -196,7 +235,7 @@ export default class WrenchWenchClient extends BindingClass {
 
         const errorFromApi = error?.response?.data?.error_message;
         if (errorFromApi) {
-            console.error(errorFromApi)
+            console.error(errorFromApi);
             error.message = errorFromApi;
         }
 

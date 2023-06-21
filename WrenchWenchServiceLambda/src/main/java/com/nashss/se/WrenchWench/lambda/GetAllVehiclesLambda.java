@@ -9,12 +9,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class GetAllVehiclesLambda extends LambdaActivityRunner<GetAllVehiclesRequest, GetAllVehiclesResult>
-        implements RequestHandler<LambdaRequest<GetAllVehiclesRequest>, LambdaResponse> {
+        implements RequestHandler<AuthenticatedLambdaRequest<GetAllVehiclesRequest>, LambdaResponse> {
 
     private final Logger log = LogManager.getLogger();
 
     @Override
-    public LambdaResponse handleRequest(LambdaRequest<GetAllVehiclesRequest> input, Context context) {
+    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetAllVehiclesRequest> input, Context context) {
         log.info("handleRequest");
         return super.runActivity(
                 () -> input.fromPath(path ->
