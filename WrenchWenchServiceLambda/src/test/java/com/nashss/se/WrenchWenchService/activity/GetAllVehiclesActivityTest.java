@@ -1,4 +1,4 @@
-package java.com.nashss.se.WrenchWenchService.activity;
+package com.nashss.se.WrenchWenchService.activity;
 
 import com.nashss.se.WrenchWench.activity.GetAllVehiclesActivity;
 import com.nashss.se.WrenchWench.activity.requests.GetAllVehiclesRequest;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 
-public class GetAllVehiclesTest {
+public class GetAllVehiclesActivityTest {
 
     @Mock
     private VehicleDao vehicleDao;
@@ -26,13 +26,13 @@ public class GetAllVehiclesTest {
     private GetAllVehiclesActivity getAllVehiclesActivity;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         openMocks(this);
         getAllVehiclesActivity = new GetAllVehiclesActivity(vehicleDao);
     }
 
     @Test
-    void handleRequest_vehiclesExistInDB_returnsVehicles(){
+    void handleRequest_vehiclesExistInDB_returnsVehicles() {
         //GIVEN
         Vehicle vehicle1 = VehicleTestHelper.generateVehicle();
         Vehicle vehicle2 = VehicleTestHelper.generateVehicle();

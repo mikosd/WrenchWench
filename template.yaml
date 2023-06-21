@@ -386,6 +386,8 @@ Resources:
           AttributeType: "S"
         - AttributeName: "recordId"
           AttributeType: "S"
+        - AttributeName: "timestamp"
+          AttributeType: "S"
       KeySchema:
         - AttributeName: "vin"
           KeyType: "HASH"
@@ -393,6 +395,7 @@ Resources:
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "records"
+
 
 #-----------------------------------------------------
 # The outputs defined below will be printed

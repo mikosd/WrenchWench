@@ -8,6 +8,7 @@ import com.nashss.se.WrenchWench.dynamodb.models.Vehicle;
 import com.nashss.se.WrenchWench.exceptions.InvalidVinException;
 import com.nashss.se.WrenchWench.models.VehicleModel;
 import com.nashss.se.WrenchWench.utils.VinUtils;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,12 +19,20 @@ public class CreateVehicleActivity {
     private final Logger log = LogManager.getLogger();
     private final VehicleDao vehicleDao;
 
-
+    /**
+     *
+     * @param vehicleDao DAO object to access the Vehicle class
+     */
     @Inject
     public CreateVehicleActivity(VehicleDao vehicleDao) {
         this.vehicleDao = vehicleDao;
     }
 
+    /**
+     *
+     * @param createVehicleRequest
+     * @return
+     */
     public CreateVehicleResult handleRequest(final CreateVehicleRequest createVehicleRequest) {
         log.info("Received CreateVehicleRequest {}", createVehicleRequest);
 

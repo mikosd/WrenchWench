@@ -27,7 +27,7 @@ public class GetVehicleActivityTest {
     }
 
     @Test
-    public void handleRequest_savedVehicleFound_returnsVehicleModelInResult(){
+    public void handleRequest_savedVehicleFound_returnsVehicleModelInResult() {
         //GIVEN
         String testVin = "JM1NA3518P1419935";
         String expectedMake = "MAZDA";

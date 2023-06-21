@@ -7,6 +7,7 @@ import com.nashss.se.WrenchWench.dynamodb.RecordDao;
 import com.nashss.se.WrenchWench.dynamodb.models.Records;
 import com.nashss.se.WrenchWench.models.RecordModel;
 import com.nashss.se.WrenchWench.utils.RecordIdGenerator;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,12 +18,21 @@ public class CreateRecordActivity {
     private final Logger log = LogManager.getLogger();
     private final RecordDao recordDao;
 
+    /**
+     *
+     * @param recordDao A DAO instance to provide access the record
+     */
     @Inject
-    public CreateRecordActivity(RecordDao recordDao){
+    public CreateRecordActivity(RecordDao recordDao) {
         this.recordDao = recordDao;
     }
 
-    public CreateRecordResult handleRequest(final CreateRecordRequest createRecordRequest){
+    /**
+     *
+     * @param createRecordRequest Request sent to the lambda function
+     * @return The result of CreateRecord
+     */
+    public CreateRecordResult handleRequest(final CreateRecordRequest createRecordRequest) {
         log.info("Received CreateRecordRequest {}", createRecordRequest);
 
         Records newRecord = new Records();

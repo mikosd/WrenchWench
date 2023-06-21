@@ -2,7 +2,7 @@ package com.nashss.se.WrenchWench.lambda;
 
 
 
-import com.nashss.se.WrenchWench.dependency.DaggerServiceComponent;
+
 import com.nashss.se.WrenchWench.dependency.ServiceComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +23,6 @@ public class LambdaActivityRunner<TRequest, TResult> {
     protected LambdaResponse runActivity(
             Supplier<TRequest> requestSupplier,
             BiFunction<TRequest, ServiceComponent, TResult> handleRequest) {
-        log.info("runActivity");
         try {
             TRequest request = requestSupplier.get();
             ServiceComponent serviceComponent = getService();
@@ -35,10 +34,9 @@ public class LambdaActivityRunner<TRequest, TResult> {
     }
 
     private ServiceComponent getService() {
-        log.info("getService");
-        if (service == null) {
-            service = DaggerServiceComponent.create();
+        if (service != null) {
+            service = null;
         }
-        return service;
+            return service;
     }
 }

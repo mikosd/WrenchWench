@@ -3,14 +3,19 @@ package com.nashss.se.WrenchWench.converters;
 import com.nashss.se.WrenchWench.dynamodb.models.Records;
 import com.nashss.se.WrenchWench.dynamodb.models.Vehicle;
 import com.nashss.se.WrenchWench.exceptions.InvalidVinException;
-import com.nashss.se.WrenchWench.exceptions.VehicleNotFoundException;
 import com.nashss.se.WrenchWench.models.RecordModel;
 import com.nashss.se.WrenchWench.models.VehicleModel;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ModelConverter {
+
+    @Inject
+    public ModelConverter(){}
+
     public VehicleModel toVehicleModel(Vehicle vehicle) throws InvalidVinException {
         String vin = vehicle.getVin();
         if(vin == null)
@@ -38,16 +43,16 @@ public class ModelConverter {
     public List<VehicleModel> toVehicleModelList(List<Vehicle> allVehicles) {
         List<VehicleModel> vehicleModelsList = new ArrayList<>();
 
-        for (Vehicle vehicle : allVehicles){
+        for (Vehicle vehicle : allVehicles) {
             vehicleModelsList.add(toVehicleModel(vehicle));
         }
         return vehicleModelsList;
     }
 
-    public List<RecordModel> toRecordModelList(List<Records> recordsList){
+    public List<RecordModel> toRecordModelList(List<Records> recordsList) {
         List<RecordModel> recordModels = new ArrayList<>();
 
-        for (Records record : recordsList){
+        for (Records record : recordsList) {
             recordModels.add(toRecordModel(record));
         }
         return recordModels;
@@ -55,8 +60,9 @@ public class ModelConverter {
 
     public RecordModel toRecordModel(Records newRecord) {
         String vin = newRecord.getVin();
-        if(vin == null)
-            throw new InvalidVinException();
+        if(vin == null) {
+            throw new InvalidVinException("InvalidVinException from ModelConverter. VIN cannot be null");
+        }
 
         return RecordModel.builder()
                 .withVin(newRecord.getVin())
