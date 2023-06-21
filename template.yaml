@@ -341,7 +341,6 @@ Resources:
             Path: /vehicles/{vin}/records/{recordId}
             Method: put
 
-
   DeleteRecordLambda:
     Type: AWS::Serverless::Function
     Properties:
@@ -386,8 +385,6 @@ Resources:
           AttributeType: "S"
         - AttributeName: "recordId"
           AttributeType: "S"
-        - AttributeName: "timestamp"
-          AttributeType: "S"
       KeySchema:
         - AttributeName: "vin"
           KeyType: "HASH"
@@ -426,5 +423,3 @@ Outputs:
     Description: "The URL of the deployed front-end application (COGNITO_REDIRECT_SIGNOUT)."
     Value: !Sub "https://${CloudfrontDistribution.DomainName}"
     Condition: DeployCloudFront
-
-
