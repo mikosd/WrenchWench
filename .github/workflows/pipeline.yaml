@@ -9,10 +9,10 @@ on:
 env:
 
   # STUDENTS: Set these environment variables 
-  API_BASE_URL: https://gsifioxim7.execute-api.us-east-2.amazonaws.com/Prod/
-  COGNITO_DOMAIN: wrench-wench-mikosdaniel.auth.us-east-2.amazoncognito.com
-  COGNITO_REDIRECT_SIGNIN: https://db06fqm2d2k4o.cloudfront.net
-  COGNITO_REDIRECT_SIGNOUT: https://db06fqm2d2k4o.cloudfront.net
+  API_BASE_URL: https://zz253by7l2.execute-api.us-east-2.amazonaws.com/Prod/
+  COGNITO_DOMAIN: wrench-wench-daniel-mikos.auth.us-east-2.amazoncognito.com
+  COGNITO_REDIRECT_SIGNIN: https://d185uezm135l25.cloudfront.net
+  COGNITO_REDIRECT_SIGNOUT: https://d185uezm135l25.cloudfront.net
 
   COGNITO_USER_POOL_ID: ${{ secrets.COGNITO_USER_POOL_ID }}
   COGNITO_USER_POOL_CLIENT_ID: ${{ secrets.COGNITO_USER_POOL_CLIENT_ID }}
@@ -25,9 +25,9 @@ env:
   SAM_TEMPLATE: template.yaml
 
   STACK_NAME: wrench-wench-service
-  PIPELINE_EXECUTION_ROLE: arn:aws:iam::383465674498:role/aws-sam-cli-managed-ServiceS-PipelineExecutionRole-1UMYHNH39G78J
-  CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::383465674498:role/aws-sam-cli-managed-Servi-CloudFormationExecutionR-19US2RN64GPL
-  ARTIFACTS_BUCKET: nss-s3-c02-capstone-artifacts-daniel-mikos/*
+  PIPELINE_EXECUTION_ROLE: arn:aws:iam::383465674498:role/aws-sam-cli-managed-ServiceS-PipelineExecutionRole-1VCP38EPT92MJ
+  CLOUDFORMATION_EXECUTION_ROLE: arn:aws:iam::383465674498:role/aws-sam-cli-managed-Servi-CloudFormationExecutionR-115KC2LBP6XU9
+  ARTIFACTS_BUCKET: nss-s3-c02-capstone-artifacts-mikos-daniel
   REGION: us-east-2
 
 jobs:
