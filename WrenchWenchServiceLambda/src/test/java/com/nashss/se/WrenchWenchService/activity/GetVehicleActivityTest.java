@@ -58,7 +58,6 @@ public class GetVehicleActivityTest {
         vehicle.setPlantState(expectedState);
         vehicle.setPlantCity(expectedCity);
         vehicle.setEngineCylinders(expectedCylinders);
-        vehicle.setEngineSize(null);
         vehicle.setEngineHP(expectedHorsepower);
         vehicle.setFuelType(expectedFuelType);
 
@@ -85,7 +84,6 @@ public class GetVehicleActivityTest {
         assertEquals(expectedState, result.getVehicle().getPlantState());
         assertEquals(expectedCity, result.getVehicle().getPlantCity());
         assertEquals(expectedCylinders, result.getVehicle().getEngineCylinders());
-        assertNull(result.getVehicle().getEngineSize());
         assertEquals(expectedHorsepower, result.getVehicle().getEngineHP());
         assertEquals(expectedFuelType, result.getVehicle().getFuelType());
     }

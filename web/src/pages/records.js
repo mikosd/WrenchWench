@@ -161,6 +161,7 @@ class Records extends BindingClass {
         console.log("priorityLevel: ",priorityLevel);
 
         const record = await this.client.updateRecord(vin, recordId, description, status, priorityLevel);
+        location.reload();
     }
 
     async deleteRecord(event){

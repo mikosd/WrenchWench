@@ -42,7 +42,6 @@ public class CreateVehicleActivityTest {
         String expectedState = "YAMAGUCHI";
         String expectedCity = "HOFU";
         String expectedCylinders = "4";
-        String expectedEngineSize = null;
         String expectedHorsepower = "116";
         String expectedFuelType = "Gasoline";
 
@@ -70,7 +69,6 @@ public class CreateVehicleActivityTest {
         assertEquals(expectedState, result.getVehicle().getPlantState());
         assertEquals(expectedCity, result.getVehicle().getPlantCity());
         assertEquals(expectedCylinders, result.getVehicle().getEngineCylinders());
-        assertNull(result.getVehicle().getEngineSize());
         assertEquals(expectedHorsepower, result.getVehicle().getEngineHP());
         assertEquals(expectedFuelType, result.getVehicle().getFuelType());
     }

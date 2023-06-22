@@ -92,7 +92,7 @@ export default class WrenchWenchClient extends BindingClass {
             const response = await this.axiosClient.get(`/vehicles/${vin}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
-                },
+                }
             });
             return response.data.vehicle;
         } catch (error) {
@@ -106,7 +106,7 @@ export default class WrenchWenchClient extends BindingClass {
             const response = await this.axiosClient.get(`/vehicles`, {
                 headers: {
                     Authorization: `Bearer: ${token}`
-                },
+                }
             });
             return response.data.vehicleList;
         } catch (error){
@@ -138,9 +138,6 @@ export default class WrenchWenchClient extends BindingClass {
             console.log("vin:" + vin + " description:" + description + " priorityLevel: "+priorityLevel);
             try {
                 const token = await this.getTokenOrThrow("Only authenticated users can create records for vehicles.");
-
-
-
                 //console.log("Record" + record + " vin:" + record.vin + " description: " + record.description);
 
                 const response = await this.axiosClient.post(`vehicles/${vin}/records`,{
@@ -150,7 +147,7 @@ export default class WrenchWenchClient extends BindingClass {
                 },{
                   headers: {
                     Authorization: `Bearer ${token}`
-                  },
+                  }
                 });
 
                 return response.data;
@@ -165,7 +162,7 @@ export default class WrenchWenchClient extends BindingClass {
             const response = await this.axiosClient.get(`vehicles/${vin}/records`,{
                 headers: {
                     Authorization: `Bearer ${token}`
-                },
+                }
             });
             return response.data;
         } catch (error) {
@@ -185,7 +182,7 @@ export default class WrenchWenchClient extends BindingClass {
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
-                },
+                }
             });
             return response.data.record;
         } catch(error){

@@ -1,6 +1,5 @@
 package com.nashss.se.WrenchWench.activity.results;
 
-import com.nashss.se.WrenchWench.dynamodb.models.Vehicle;
 import com.nashss.se.WrenchWench.models.VehicleModel;
 
 public class CreateVehicleResult {

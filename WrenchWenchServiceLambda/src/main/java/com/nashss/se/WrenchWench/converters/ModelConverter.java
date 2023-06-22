@@ -34,7 +34,6 @@ public class ModelConverter {
                 .withPlantState(vehicle.getPlantState())
                 .withPlantCity(vehicle.getPlantCity())
                 .withEngineCylinders(vehicle.getEngineCylinders())
-                .withEngineSize(vehicle.getEngineSize())
                 .withEngineHP(vehicle.getEngineHP())
                 .withFuelType(vehicle.getFuelType())
                 .build();

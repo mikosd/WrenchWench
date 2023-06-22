@@ -8,7 +8,6 @@ public class CreateVehicleRequest {
     private final String vin;
 
     public CreateVehicleRequest(String vin) {
-
         this.vin = vin;
     }
 
@@ -18,8 +17,8 @@ public class CreateVehicleRequest {
 
     @Override
     public String toString() {
-        return "CreateVehicleRequest{" + '\'' +
-                ", vin='" + vin + '\'' +
+        return "CreateVehicleRequest{" +
+                "vin='" + vin +
                 '}';
     }
 

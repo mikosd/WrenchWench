@@ -18,7 +18,6 @@ public class Vehicle {
     private String plantState;
     private String plantCity;
     private String engineCylinders;
-    private String engineSize;
     private String engineHP;
     private String fuelType;
 
@@ -117,14 +116,6 @@ public class Vehicle {
     }
     public void setEngineCylinders(String engineCylinders) {
         this.engineCylinders = engineCylinders;
-    }
-
-    @DynamoDBAttribute(attributeName = "engineSize")
-    public String getEngineSize() {
-        return engineSize;
-    }
-    public void setEngineSize(String engineSize) {
-        this.engineSize = engineSize;
     }
 
     @DynamoDBAttribute(attributeName = "engineHP")
