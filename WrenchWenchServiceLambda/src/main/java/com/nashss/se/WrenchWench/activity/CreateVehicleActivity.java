@@ -8,7 +8,6 @@ import com.nashss.se.WrenchWench.dynamodb.models.Vehicle;
 import com.nashss.se.WrenchWench.exceptions.InvalidVinException;
 import com.nashss.se.WrenchWench.models.VehicleModel;
 import com.nashss.se.WrenchWench.utils.VinUtils;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,7 +19,6 @@ public class CreateVehicleActivity {
     private final VehicleDao vehicleDao;
 
     /**
-     *
      * @param vehicleDao DAO object to access the Vehicle class
      */
     @Inject
@@ -34,7 +32,7 @@ public class CreateVehicleActivity {
      * @return
      */
     public CreateVehicleResult handleRequest(final CreateVehicleRequest createVehicleRequest) {
-        log.info("Received CreateVehicleRequest {}", createVehicleRequest);
+        log.warn("Received CreateVehicleRequest {}", createVehicleRequest);
 
         if (!VinUtils.validateVin(createVehicleRequest.getVin())) {
             throw new InvalidVinException("Invalid VIN - Check the number you have dialed and try again");

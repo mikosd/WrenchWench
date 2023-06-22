@@ -9,10 +9,10 @@ on:
 env:
 
   # STUDENTS: Set these environment variables 
-  API_BASE_URL: https://zz253by7l2.execute-api.us-east-2.amazonaws.com/Prod/
+  API_BASE_URL: https://g08igx37ah.execute-api.us-east-2.amazonaws.com/Prod/
   COGNITO_DOMAIN: wrench-wench-daniel-mikos.auth.us-east-2.amazoncognito.com
-  COGNITO_REDIRECT_SIGNIN: https://d185uezm135l25.cloudfront.net
-  COGNITO_REDIRECT_SIGNOUT: https://d185uezm135l25.cloudfront.net
+  COGNITO_REDIRECT_SIGNIN: https://d2ypm15bn0j3ig.cloudfront.net
+  COGNITO_REDIRECT_SIGNOUT: https://d2ypm15bn0j3ig.cloudfront.net
 
   COGNITO_USER_POOL_ID: ${{ secrets.COGNITO_USER_POOL_ID }}
   COGNITO_USER_POOL_CLIENT_ID: ${{ secrets.COGNITO_USER_POOL_CLIENT_ID }}
@@ -20,8 +20,8 @@ env:
   GH_PACKAGE_REG_READ_USER: ${{ secrets.GH_PACKAGE_REG_READ_USER }}
   GH_PACKAGE_REG_READ_PASS: ${{ secrets.GH_PACKAGE_REG_READ_PASS }}
   
-  PIPELINE_USER_ACCESS_KEY_ID: ${{ secrets.AKIAVSSCV24BO7H2YT55 }}
-  PIPELINE_USER_SECRET_ACCESS_KEY: ${{ secrets.B0Gvwoe17oknsuOuKaSh5y+jzJnlnhyaB7Y8qInY }}
+  PIPELINE_USER_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  PIPELINE_USER_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   SAM_TEMPLATE: template.yaml
 
   STACK_NAME: wrench-wench-service

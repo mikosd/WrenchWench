@@ -104,7 +104,8 @@ public class VinUtils {
 
                 int variableId = result.getInt("VariableId");
                 String value = result.optString("Value");
-                if (value == null) {
+
+                if (value == null || value.isEmpty()) {
                     value = "N/A";
                 }
 

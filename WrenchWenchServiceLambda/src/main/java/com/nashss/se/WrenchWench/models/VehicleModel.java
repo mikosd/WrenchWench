@@ -14,7 +14,6 @@ public class VehicleModel {
     private final String plantState;
     private final String plantCity;
     private final String engineCylinders;
-    private final String engineSize;
     private final String engineHP;
     private final String fuelType;
 
@@ -22,8 +21,7 @@ public class VehicleModel {
     private VehicleModel(String vin, String make, String model, String year,
                          String bodyClass, String vehicleType, String numOfDoors,
                          String manufacturerName, String plantCountry, String plantState,
-                         String plantCity, String engineCylinders, String engineSize,
-                         String engineHP, String fuelType){
+                         String plantCity, String engineCylinders, String engineHP, String fuelType) {
         this.vin = vin;
         this.make = make;
         this.model = model;
@@ -36,7 +34,6 @@ public class VehicleModel {
         this.plantState = plantState;
         this.plantCity = plantCity;
         this.engineCylinders = engineCylinders;
-        this.engineSize = engineSize;
         this.engineHP = engineHP;
         this.fuelType = fuelType;
     }
@@ -89,10 +86,6 @@ public class VehicleModel {
         return engineCylinders;
     }
 
-    public String getEngineSize() {
-        return engineSize;
-    }
-
     public String getEngineHP() {
         return engineHP;
     }
@@ -118,7 +111,6 @@ public class VehicleModel {
         private String plantState;
         private String plantCity;
         private String engineCylinders;
-        private String engineSize;
         private String engineHP;
         private String fuelType;
 
@@ -126,77 +118,72 @@ public class VehicleModel {
         }
 
 
-        public Builder withVin(String vin){
+        public Builder withVin(String vin) {
             this.vin = vin;
             return this;
         }
 
-        public Builder withMake(String make){
+        public Builder withMake(String make) {
             this.make = make;
             return this;
         }
 
-        public Builder withModel(String model){
+        public Builder withModel(String model) {
             this.model = model;
             return this;
         }
 
-        public Builder withYear(String year){
+        public Builder withYear(String year) {
             this.year = year;
             return this;
         }
 
-        public Builder withBodyClass(String bodyClass){
+        public Builder withBodyClass(String bodyClass) {
             this.bodyClass = bodyClass;
             return this;
         }
 
-        public Builder withVehicleType(String vehicleType){
+        public Builder withVehicleType(String vehicleType) {
             this.vehicleType = vehicleType;
             return this;
         }
 
-        public Builder withNumOfDoors(String numOfDoors){
+        public Builder withNumOfDoors(String numOfDoors) {
             this.numOfDoors = numOfDoors;
             return this;
         }
 
-        public Builder withManufacturerName(String manufacturerName){
+        public Builder withManufacturerName(String manufacturerName) {
             this.manufacturerName = manufacturerName;
             return this;
         }
 
-        public Builder withPlantCountry(String plantCountry){
+        public Builder withPlantCountry(String plantCountry) {
             this.plantCountry = plantCountry;
             return this;
         }
 
-        public Builder withPlantState(String plantState){
+        public Builder withPlantState(String plantState) {
             this.plantState = plantState;
             return this;
         }
 
-        public Builder withPlantCity(String plantCity){
+        public Builder withPlantCity(String plantCity) {
             this.plantCity = plantCity;
             return this;
         }
 
-        public Builder withEngineCylinders(String engineCylinders){
+        public Builder withEngineCylinders(String engineCylinders) {
             this.engineCylinders = engineCylinders;
             return this;
         }
 
-        public Builder withEngineSize(String engineSize){
-            this.engineSize = engineSize;
-            return this;
-        }
-
-        public Builder withEngineHP(String engineHP){
+        public Builder withEngineHP(String engineHP) {
             this.engineHP = engineHP;
             return this;
         }
 
-        public Builder withFuelType(String fuelType){
+        public Builder withFuelType(String fuelType) {
             this.fuelType = fuelType;
             return this;
         }
@@ -205,8 +192,7 @@ public class VehicleModel {
             return new VehicleModel(vin, make, model, year,
                     bodyClass, vehicleType, numOfDoors,
                     manufacturerName, plantCountry, plantState,
-                    plantCity, engineCylinders, engineSize,
-                    engineHP, fuelType);
+                    plantCity, engineCylinders, engineHP, fuelType);
         }
     }
 }

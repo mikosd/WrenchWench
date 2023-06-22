@@ -127,22 +127,22 @@ class Vehicles extends BindingClass {
   }
 
 
-  async submit(evt) {
+        async submit(evt) {
           evt.preventDefault();
 
-          const vin = document.getElementById('inputVin').value; // Get the value from the "inputVin" input field
+          const vin =  await document.getElementById('inputVin').value; // Get the value from the "inputVin" input field
           const vehicles = await this.client.createVehicle(vin);
 
           this.dataStore.set('vehicles', vehicles);
        }
 
-      redirectToViewVehicle(){
+       redirectToViewVehicle(){
           const vehicles = this.dataStore.get('vehicles');
           const vin = document.getElementById('inputVin').value;
           if(vehicles != null){
               window.location.href = `/viewVehicle.html?vin=${vehicles.vin}`;
           }
-      }
+       }
 }
 
 const main = async () => {

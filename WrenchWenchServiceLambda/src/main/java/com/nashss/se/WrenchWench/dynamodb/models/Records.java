@@ -4,8 +4,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 @DynamoDBTable(tableName = "records")
 public class Records {
-    public static final String TIMESTAMP_INDEX = "RecordsByTimestampIndex";
-
     private String vin;
     private String recordId;
     private String timestamp;
@@ -28,8 +26,7 @@ public class Records {
     public void setRecordId(String recordId) {
         this.recordId = recordId;
     }
-
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = TIMESTAMP_INDEX, attributeName = "timestamp")
+    @DynamoDBAttribute(attributeName = "timestamp")
     public String getTimestamp() {
         return timestamp;
     }

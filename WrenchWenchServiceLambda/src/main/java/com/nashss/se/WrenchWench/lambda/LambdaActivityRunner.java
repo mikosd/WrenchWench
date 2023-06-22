@@ -3,6 +3,7 @@ package com.nashss.se.WrenchWench.lambda;
 
 
 
+import com.nashss.se.WrenchWench.dependency.DaggerServiceComponent;
 import com.nashss.se.WrenchWench.dependency.ServiceComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,8 +35,8 @@ public class LambdaActivityRunner<TRequest, TResult> {
     }
 
     private ServiceComponent getService() {
-        if (service != null) {
-            service = null;
+        if (service == null) {
+            service = DaggerServiceComponent.create();
         }
             return service;
     }

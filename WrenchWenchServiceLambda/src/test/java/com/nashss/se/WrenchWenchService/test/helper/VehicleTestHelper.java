@@ -21,7 +21,6 @@ public class VehicleTestHelper {
         vehicle.setPlantState("state");
         vehicle.setPlantCity("HIROSHIMA");
         vehicle.setEngineCylinders("4");
-        vehicle.setEngineSize("1.6L");
         vehicle.setEngineHP("128");
         vehicle.setFuelType("Gasoline");
 
@@ -53,8 +52,6 @@ public class VehicleTestHelper {
             if(!modelList.get(i).getPlantCity().equals(vehicleList.get(i).getPlantCity()))
                 return false;
             if(!modelList.get(i).getEngineCylinders().equals(vehicleList.get(i).getEngineCylinders()))
-                return false;
-            if(!modelList.get(i).getEngineSize().equals(vehicleList.get(i).getEngineSize()))
                 return false;
             if(!modelList.get(i).getEngineHP().equals(vehicleList.get(i).getEngineHP()))
                 return false;
